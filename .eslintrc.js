@@ -1,20 +1,51 @@
 module.exports = {
     root: true,
     env: {
-        browser: true
+        browser: true,
+        commonjs: true,
+        es2021: true,
+        node: true
+    },
+    parser: 'vue-eslint-parser',
+    parserOptions: {
+        parser: '@typescript-eslint/parser',
+        ecmaVersion: 2020,
+        sourceType: 'module'
     },
     extends: [
-        "plugin:vue/vue3-essential",
-        "eslint:recommended",
-        "@vue/typescript/recommended",
-        "@vue/prettier",
-        "@vue/prettier/@typescript-eslint"
+        'plugin:vue/vue3-recommended',
+        'plugin:@typescript-eslint/recommended',
+        'prettier',
+        'plugin:prettier/recommended'
     ],
-    parserOptions: {
-        ecmaVersion: 2020
+    globals: {
+        locale: true
     },
+    /**
+     * lint level config
+     * 'off'-0
+     * 'warn'-1
+     * 'error'-2
+     */
     rules: {
-        "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
-        "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off"
+        'function-paren-newline': [0, 'never'],
+        '@typescript-eslint/ban-ts-ignore': 'off',
+        '@typescript-eslint/explicit-function-return-type': 'off',
+        '@typescript-eslint/no-explicit-any': 'off',
+        '@typescript-eslint/no-var-requires': 'off',
+        'vue/custom-event-name-casing': 'off',
+        'no-use-before-define': 'off',
+        '@typescript-eslint/no-use-before-define': 'off',
+        '@typescript-eslint/ban-ts-comment': 'off',
+        '@typescript-eslint/ban-type': 'off',
+        '@typescript-eslint/no-non-null-assertion': 'off',
+        '@typescript-eslint/esplicit-module-boundary-types': 'off',
+        '@typescript-eslint/no-unused-vars': [
+            'off',
+            {
+                argslgnorePattern: '^h$',
+                varslgnorePattern: '^h$'
+            }
+        ]
     }
 };
