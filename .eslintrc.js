@@ -21,11 +21,12 @@ module.exports = {
     globals: {
         locale: true
     },
+
     /**
      * lint level config
-     * 'off'-0
-     * 'warn'-1
-     * 'error'-2
+     * 'off' - 0
+     * 'warn' - 1
+     * 'error' - 2
      */
     rules: {
         'function-paren-newline': [0, 'never'],
@@ -33,18 +34,19 @@ module.exports = {
         '@typescript-eslint/explicit-function-return-type': 'off',
         '@typescript-eslint/no-explicit-any': 'off',
         '@typescript-eslint/no-var-requires': 'off',
+        '@typescript-eslint/no-empty-funtion': 'off',
         'vue/custom-event-name-casing': 'off',
         'no-use-before-define': 'off',
         '@typescript-eslint/no-use-before-define': 'off',
         '@typescript-eslint/ban-ts-comment': 'off',
-        '@typescript-eslint/ban-type': 'off',
+        '@typescript-eslint/ban-types': 'off',
         '@typescript-eslint/no-non-null-assertion': 'off',
-        '@typescript-eslint/esplicit-module-boundary-types': 'off',
+        '@typescript-eslint/explicit-module-boundary-types': 'off',
         '@typescript-eslint/no-unused-vars': [
             'off',
             {
-                argslgnorePattern: '^h$',
-                varslgnorePattern: '^h$'
+                argsIgnorePattern: '^h$',
+                varsIgnorePattern: '^h$'
             }
         ]
     }
