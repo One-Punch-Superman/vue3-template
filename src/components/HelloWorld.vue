@@ -13,7 +13,7 @@
                     href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-router"
                     target="_blank"
                     rel="noopener"
-                >router
+                    >router
                 </a>
             </li>
             <li>
@@ -83,12 +83,10 @@
 </template>
 
 <script lang="ts" setup>
-import { defineComponent } from 'vue';
-
-export default defineComponent({
-    name: 'HelloWorld',
-    props: {
-        msg: String
+defineProps({
+    msg: {
+        type: String,
+        default: ''
     }
 });
 </script>

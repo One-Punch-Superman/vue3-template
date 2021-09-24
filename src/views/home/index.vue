@@ -16,59 +16,48 @@
     </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, onMounted, nextTick } from 'vue';
+<script lang="ts" setup>
+import { ref, onMounted, nextTick } from 'vue';
 import { getMd } from '@/api/table';
 
-export default defineComponent({
-    name: 'Home',
-    setup() {
-        const previewRef = ref();
-        const list = ref();
-        const text = ref('');
-        onMounted(() => {
-            getMd().then((response) => {
-                text.value = response.data;
-                nextTick(() => {
-                    const anchors = previewRef.value.$el.querySelectorAll('h1,h2,h3,h4,h5,h6');
-                    const titles = Array.from(anchors).filter((title: any) => !!title.innerText.trim());
+const previewRef = ref();
+const list = ref();
+const text = ref('');
+onMounted(() => {
+    getMd().then((response) => {
+        text.value = response.data;
+        nextTick(() => {
+            const anchors = previewRef.value.$el.querySelectorAll('h1,h2,h3,h4,h5,h6');
+            const titles = Array.from(anchors).filter((title: any) => !!title.innerText.trim());
 
-                    if (!titles.length) {
-                        list.value = [];
-                        return;
-                    }
-
-                    const hTags = Array.from(new Set(titles.map((title: any) => title.tagName))).sort();
-
-                    list.value = titles.map((el: any) => ({
-                        title: el.innerText,
-                        lineIndex: el.getAttribute('data-v-md-line'),
-                        indent: hTags.indexOf(el.tagName)
-                    }));
-                });
-            });
-        });
-        const handleAnchorClick = (anchor: any) => {
-            const { lineIndex } = anchor;
-
-            const heading = previewRef.value.$el.querySelector(`[data-v-md-line="${lineIndex}"]`);
-
-            if (heading) {
-                previewRef.value.previewScrollToTarget({
-                    target: heading,
-                    scrollContainer: window,
-                    top: 60
-                });
+            if (!titles.length) {
+                list.value = [];
+                return;
             }
-        };
-        return {
-            previewRef,
-            list,
-            text,
-            handleAnchorClick
-        };
-    }
+
+            const hTags = Array.from(new Set(titles.map((title: any) => title.tagName))).sort();
+
+            list.value = titles.map((el: any) => ({
+                title: el.innerText,
+                lineIndex: el.getAttribute('data-v-md-line'),
+                indent: hTags.indexOf(el.tagName)
+            }));
+        });
+    });
 });
+const handleAnchorClick = (anchor: any) => {
+    const { lineIndex } = anchor;
+
+    const heading = previewRef.value.$el.querySelector(`[data-v-md-line="${lineIndex}"]`);
+
+    if (heading) {
+        previewRef.value.previewScrollToTarget({
+            target: heading,
+            scrollContainer: window,
+            top: 60
+        });
+    }
+};
 </script>
 
 <style scoped lang="scss">

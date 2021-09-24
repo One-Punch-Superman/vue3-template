@@ -4,5 +4,5 @@ module.exports = {
     semi: true, // 句尾使用分号
     eslintIntegration: true, // prettier使用eslint的代码格式进行校验
     tabWidth: 4,
-    trailingComma: "none" // 对象末尾不使用逗号
-}
+    trailingComma: 'none' // 对象末尾不使用逗号
+};
