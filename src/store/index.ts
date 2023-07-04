@@ -1,18 +1,10 @@
-import { createStore } from 'vuex';
-import createPersistedState from 'vuex-persistedstate';
-import user from './modules/user';
-import getters from './getters';
+import { createPinia } from 'pinia';
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 
-const store = createStore({
-    modules: {
-        user
-    },
-    getters,
-    plugins: [createPersistedState()]
-});
+const store = createPinia();
+store.use(piniaPluginPersistedstate);
+
+export * from './modules/user';
+export * from './modules/setting';
 
 export default store;
-
-export function myStore() {
-    return store;
-}
