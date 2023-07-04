@@ -7,7 +7,7 @@
         </el-icon>
         <span>{{ subItem.title }}</span>
       </template>
-      <SubMenu :menu-list="subItem.children" />
+      <SubMenu :menuList="subItem.children" />
     </el-sub-menu>
     <el-menu-item v-else :index="subItem.path" @click="handleClickMenu(subItem)">
       <el-icon>
