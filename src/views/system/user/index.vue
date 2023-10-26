@@ -226,7 +226,7 @@ const handleCurrentChange = (val: number) => {
 
 <style lang="scss" scoped>
 .el-card {
-  // height: calc(100vh - 150px);
+  height: calc(100vh - 100px);
   box-sizing: border-box;
   .el-input {
     width: 250px;
