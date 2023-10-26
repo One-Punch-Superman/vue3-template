@@ -1,10 +1,10 @@
 <template>
-  <el-row class="add">
-    <el-col :span="24" align="right">
-      <el-button type="primary" @click="handleAdd">新增</el-button>
-    </el-col>
-  </el-row>
   <el-card>
+    <el-row class="add">
+      <el-col :span="24" align="right">
+        <el-button type="primary" @click="handleAdd">新增</el-button>
+      </el-col>
+    </el-row>
     <el-table :data="dataList" style="width: 100%" border>
       <el-table-column align="center" prop="roleName" label="角色名" />
       <el-table-column align="center" prop="mark" label="角色标识" />
@@ -46,7 +46,11 @@ const handleDel = () => {};
 </script>
 
 <style lang="scss" scoped>
+.el-card {
+  height: calc(100vh - 100px);
+  box-sizing: border-box;
+}
 .add {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 </style>

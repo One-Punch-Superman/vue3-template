@@ -1,6 +1,5 @@
 <template>
-  <!-- 搜索 -->
-  <el-card class="search">
+  <el-card>
     <el-row>
       <el-col :span="20">
         <el-input v-model="searchName" placeholder="用户名" clearable></el-input>
@@ -10,9 +9,6 @@
         <el-button type="primary" @click="handleAdd">新增</el-button>
       </el-col>
     </el-row>
-  </el-card>
-  <!-- 列表 -->
-  <el-card>
     <el-table :data="dataList" style="width: 100%" border>
       <el-table-column align="center" prop="username" label="用户名" />
       <el-table-column align="center" prop="email" label="邮箱" />
@@ -31,46 +27,44 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-pagination
+      v-model:current-page="currentPage"
+      v-model:page-size="pageSize"
+      :page-sizes="[10, 20, 50, 100]"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total"
+      background
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+    />
+    <el-dialog v-model="dialogVisible" :title="dialogTitle" @close="handleCancel" width="500px">
+      <el-form :model="formData" ref="formRef" :rules="formRules" label-width="70px">
+        <el-form-item label="用户名:" prop="username">
+          <el-input v-model="formData.username" :readonly="dialogTitle == '编辑'" />
+        </el-form-item>
+        <el-form-item label="邮箱:" prop="email">
+          <el-input v-model="formData.email" />
+        </el-form-item>
+        <el-form-item label="地址:" prop="address">
+          <el-input v-model="formData.address" />
+        </el-form-item>
+        <el-form-item label="角色:" prop="role">
+          <el-select v-model="formData.role" multiple placeholder=" ">
+            <el-option v-for="(item, index) in roleList" :key="index" :label="item.label" :value="item.value" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="状态:" prop="status">
+          <el-switch v-model="formData.status" :active-value="1" :inactive-value="0" />
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button type="primary" @click="handlecConfirm">确定</el-button>
+          <el-button @click="handleCancel">取消</el-button>
+        </span>
+      </template>
+    </el-dialog>
   </el-card>
-  <!-- 分页 -->
-  <el-pagination
-    v-model:current-page="currentPage"
-    v-model:page-size="pageSize"
-    :page-sizes="[10, 20, 50, 100]"
-    layout="total, sizes, prev, pager, next, jumper"
-    :total="total"
-    background
-    @size-change="handleSizeChange"
-    @current-change="handleCurrentChange"
-  />
-  <!-- 对话框 -->
-  <el-dialog v-model="dialogVisible" :title="dialogTitle" @close="handleCancel" width="500px">
-    <el-form :model="formData" ref="formRef" :rules="formRules" label-width="70px">
-      <el-form-item label="用户名:" prop="username">
-        <el-input v-model="formData.username" :readonly="dialogTitle == '编辑'" />
-      </el-form-item>
-      <el-form-item label="邮箱:" prop="email">
-        <el-input v-model="formData.email" />
-      </el-form-item>
-      <el-form-item label="地址:" prop="address">
-        <el-input v-model="formData.address" />
-      </el-form-item>
-      <el-form-item label="角色:" prop="role">
-        <el-select v-model="formData.role" multiple placeholder=" ">
-          <el-option v-for="(item, index) in roleList" :key="index" :label="item.label" :value="item.value" />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="状态:" prop="status">
-        <el-switch v-model="formData.status" :active-value="1" :inactive-value="0" />
-      </el-form-item>
-    </el-form>
-    <template #footer>
-      <span class="dialog-footer">
-        <el-button type="primary" @click="handlecConfirm">确定</el-button>
-        <el-button @click="handleCancel">取消</el-button>
-      </span>
-    </template>
-  </el-dialog>
 </template>
 
 <script lang="ts" setup>
@@ -232,7 +226,8 @@ const handleCurrentChange = (val: number) => {
 
 <style lang="scss" scoped>
 .el-card {
-  margin-bottom: 10px;
+  // height: calc(100vh - 150px);
+  box-sizing: border-box;
   .el-input {
     width: 250px;
     margin-right: 10px;
@@ -240,5 +235,8 @@ const handleCurrentChange = (val: number) => {
 }
 .el-dialog .el-select {
   width: 100%;
+}
+.el-table {
+  margin: 20px 0;
 }
 </style>

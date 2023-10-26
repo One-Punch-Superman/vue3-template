@@ -12,6 +12,6 @@
 
 <style lang="scss" scoped>
 .layout-main {
-  min-height: calc(100vh - 140px);
+  min-height: calc(100vh - 100px);
 }
 </style>
