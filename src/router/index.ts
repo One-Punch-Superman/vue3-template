@@ -16,6 +16,11 @@ NProgress.configure({ showSpinner: false });
 
 export const allRoutes: Array<RouteRecordRaw> = [
   {
+    path: '/login',
+    name: 'login',
+    component: () => import('@/views/login/index.vue')
+  },
+  {
     path: '/',
     name: 'home',
     component: Layout,
@@ -28,13 +33,18 @@ export const allRoutes: Array<RouteRecordRaw> = [
   },
   ...moduleRoute,
   {
-    path: '/:w+',
+    path: '/404',
+    name: 'notFound',
+    component: () => import('@/views/notFound/index.vue')
+  },
+  {
+    path: '/:pathMatch(.*)*',
     redirect: '/404'
   }
 ];
 
 const whiteList = ['/login'];
-console.log('allRoutes', allRoutes);
+
 const router = createRouter({
   history: createWebHistory(),
   routes: allRoutes,

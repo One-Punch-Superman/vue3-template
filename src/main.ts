@@ -8,6 +8,8 @@ import 'element-plus/dist/index.css';
 
 import * as ElementPlusIconsVue from '@element-plus/icons-vue';
 
+import globalComponent from '@/components';
+
 import '@/style/index.scss';
 
 const app = createApp(App);
@@ -19,5 +21,6 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 app.use(router);
 app.use(store);
 app.use(ElementPlus);
+app.use(globalComponent);
 
 app.mount('#app');

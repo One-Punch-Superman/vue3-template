@@ -3,7 +3,11 @@
 </template>
 
 <script lang="ts" setup>
-const str = ref('403');
+const str = ref('');
+
+onMounted(() => {
+  console.log();
+});
 </script>
 
 <style lang="scss" scoped></style>

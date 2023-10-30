@@ -24,11 +24,5 @@ export default [
         meta: { title: '关于项目' }
       }
     ]
-  },
-  {
-    path: '/login',
-    name: 'login',
-    component: () => import('@/views/login/index.vue'),
-    meta: { title: '登录页' }
   }
 ];

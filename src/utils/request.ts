@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { ElMessage } from 'element-plus';
 
 // 创建实例
 const instance = axios.create({
@@ -26,6 +27,29 @@ instance.interceptors.response.use(
     return response.data;
   },
   (error) => {
+    const status = error.response.status;
+    let message = '';
+    switch (status) {
+      case 401:
+        message = 'TOKEN过期';
+        break;
+      case 403:
+        message = '无权访问';
+        break;
+      case 404:
+        message = '请求地址错误';
+        break;
+      case 500:
+        message = '服务器异常';
+        break;
+      default:
+        message = '网络异常';
+        break;
+    }
+    ElMessage({
+      type: 'error',
+      message
+    });
     return Promise.reject(error);
   }
 );
