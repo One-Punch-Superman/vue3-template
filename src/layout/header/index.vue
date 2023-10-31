@@ -39,7 +39,7 @@
 </template>
 
 <script lang="ts" setup>
-import { Setting, ArrowDown } from '@element-plus/icons-vue';
+import { Expand, Fold, Search, Bell, Setting, ArrowDown } from '@element-plus/icons-vue';
 import { useSettingStore, useUserStore } from '@/store';
 import Aside from '@/layout/aside/index.vue';
 
