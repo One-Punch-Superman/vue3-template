@@ -9,9 +9,4 @@ onMounted(() => {
 });
 </script>
 
-<style lang="scss" scoped>
-.base {
-  height: 2000px;
-  background: #fff;
-}
-</style>
+<style lang="scss" scoped></style>

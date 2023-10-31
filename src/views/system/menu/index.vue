@@ -6,7 +6,7 @@
       </el-col>
     </el-row>
     <el-table :data="dataList" style="width: 100%" border row-key="path" default-expand-all>
-      <el-table-column prop="meta.title" label="菜单名" />
+      <el-table-column header-align="center" prop="meta.title" label="菜单名" />
       <el-table-column align="center" prop="meta.icon" label="菜单图标" />
       <el-table-column align="center" prop="path" label="菜单路径" />
       <el-table-column align="center" prop="component" label="组件路径" />
