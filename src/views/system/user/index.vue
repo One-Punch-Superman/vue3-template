@@ -1,5 +1,5 @@
 <template>
-  <el-card>
+  <div class="container">
     <el-row>
       <el-col :span="20">
         <el-input v-model="searchName" placeholder="用户名" clearable></el-input>
@@ -64,7 +64,7 @@
         </span>
       </template>
     </el-dialog>
-  </el-card>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -225,13 +225,9 @@ const handleCurrentChange = (val: number) => {
 </script>
 
 <style lang="scss" scoped>
-.el-card {
-  height: calc(100vh - 100px);
-  box-sizing: border-box;
-  .el-input {
-    width: 250px;
-    margin-right: 10px;
-  }
+.el-input {
+  width: 250px;
+  margin-right: 10px;
 }
 .el-dialog .el-select {
   width: 100%;

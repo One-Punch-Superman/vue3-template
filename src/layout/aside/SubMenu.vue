@@ -54,7 +54,7 @@ const handleClickMenu = (subItem: Menu.MenuOptions) => {
   color: #fff !important;
 }
 .el-menu--horizontal > .el-sub-menu .el-sub-menu__title {
-  color: #fff;
+  color: #fff !important;
 }
 .el-menu--horizontal {
   .el-menu .el-menu-item,
@@ -64,8 +64,5 @@ const handleClickMenu = (subItem: Menu.MenuOptions) => {
   .el-sub-menu.is-active {
     color: #fff;
   }
-}
-.el-menu--horizontal > .el-sub-menu .el-sub-menu__title {
-  color: #fff !important;
 }
 </style>

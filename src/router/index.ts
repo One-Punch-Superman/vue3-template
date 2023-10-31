@@ -1,6 +1,4 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
-import NProgress from 'nprogress';
-import 'nprogress/nprogress.css';
 import { getUserStore } from '@/store';
 import Layout from '@/layout/index.vue';
 
@@ -11,8 +9,6 @@ Object.keys(modules).forEach((key) => {
   const modList = Array.isArray(mod) ? [...mod] : [mod];
   moduleRoute.push(...modList);
 });
-
-NProgress.configure({ showSpinner: false });
 
 export const allRoutes: Array<RouteRecordRaw> = [
   {
@@ -58,7 +54,6 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
-  NProgress.start();
   const userStore = getUserStore();
   const { token } = userStore;
   if (token) {
@@ -74,10 +69,6 @@ router.beforeEach(async (to, from, next) => {
       next(`/login?redirect=${to.path}`);
     }
   }
-});
-
-router.afterEach(() => {
-  NProgress.done();
 });
 
 export default router;

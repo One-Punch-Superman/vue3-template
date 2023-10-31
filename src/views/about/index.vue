@@ -1,5 +1,5 @@
 <template>
-  <div class="base">{{ str }}</div>
+  <div class="container">{{ str }}</div>
 </template>
 <script lang="ts" setup>
 const str = ref('关于项目');

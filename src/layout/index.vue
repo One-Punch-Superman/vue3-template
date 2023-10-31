@@ -1,7 +1,7 @@
 <template>
   <div class="layout-container">
     <el-container v-if="layout === 'side'">
-      <el-aside width="250px" :style="{ width: sidebarWidth, background: asideBackground }">
+      <el-aside :style="{ width: sidebarWidth, background: asideBackground }">
         <Aside />
       </el-aside>
       <el-container>
@@ -62,6 +62,7 @@ const { layout, headerBackground, asideBackground, sidebarWidth, showFooter } = 
   }
   .el-main::-webkit-scrollbar {
     width: 8px;
+    height: 8px;
   }
   .el-main::-webkit-scrollbar-thumb {
     background: rgb(0 0 0 / 20%);

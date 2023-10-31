@@ -1,5 +1,5 @@
 <template>
-  <el-card>
+  <div class="container">
     <el-row class="add">
       <el-col :span="24" align="right">
         <el-button type="primary" @click="handleAdd">新增</el-button>
@@ -17,7 +17,7 @@
         </template>
       </el-table-column>
     </el-table>
-  </el-card>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -94,10 +94,6 @@ const handleDel = () => {};
 </script>
 
 <style lang="scss" scoped>
-.el-card {
-  height: calc(100vh - 100px);
-  box-sizing: border-box;
-}
 .add {
   margin-bottom: 20px;
 }

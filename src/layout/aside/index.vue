@@ -1,7 +1,7 @@
 <template>
   <div v-if="layout === 'side'" class="header-log">
-    <img v-if="!isSidebarCompact" width="180" src="@/assets/image/assets-logo-full.svg" alt="logo" />
-    <img v-else width="28" src="@/assets/image/assets-t-logo.svg" alt="logo" />
+    <img v-if="!isSidebarCompact" width="180" height="60" src="@/assets/image/assets-logo-full.svg" alt="logo" />
+    <img v-else width="28" height="60" src="@/assets/image/assets-t-logo.svg" alt="logo" />
   </div>
   <el-scrollbar>
     <el-menu
@@ -50,9 +50,8 @@ const changeCollapsed = () => {
 .header-log {
   display: flex;
   align-items: center;
-  width: 230px;
-  height: 59px;
-  margin-left: 20px;
+  height: 60px;
+  padding-left: 20px;
 }
 .el-menu {
   position: relative;
@@ -60,8 +59,7 @@ const changeCollapsed = () => {
   border-right: 0;
 }
 .el-menu--horizontal {
-  height: 59px;
-  border-bottom: 0;
+  height: 60px;
 }
 .mix-collapse {
   position: absolute;

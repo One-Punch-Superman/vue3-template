@@ -1,10 +1,6 @@
 <template>
   <div class="layout-main">
-    <router-view v-slot="{ Component }">
-      <transition name="fade">
-        <component :is="Component" />
-      </transition>
-    </router-view>
+    <router-view> </router-view>
   </div>
 </template>
 
@@ -12,6 +8,7 @@
 
 <style lang="scss" scoped>
 .layout-main {
+  min-width: 1200px;
   min-height: calc(100vh - 100px);
 }
 </style>

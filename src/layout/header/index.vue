@@ -60,7 +60,7 @@ const changeLayout = () => {
 const changeCollapsed = () => {
   settingStore.updateConfig({
     isSidebarCompact: !isSidebarCompact.value,
-    sidebarWidth: !isSidebarCompact.value ? '65px' : '250px'
+    sidebarWidth: !isSidebarCompact.value ? '65px' : '230px'
   });
 };
 
@@ -99,7 +99,7 @@ const linkTo = (command: string) => {
 .header-log {
   display: flex;
   align-items: center;
-  width: 250px;
+  width: 230px;
   height: 60px;
 }
 </style>
