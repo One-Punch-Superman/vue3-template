@@ -8,6 +8,8 @@ import 'element-plus/dist/index.css';
 
 import * as ElementPlusIconsVue from '@element-plus/icons-vue';
 
+import 'virtual:svg-icons-register';
+
 import globalComponent from '@/components';
 
 import '@/style/index.scss';

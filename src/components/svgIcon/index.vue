@@ -1,12 +1,23 @@
 <template>
-  <div class="">{{ str }}</div>
+  <svg :style="{ width: size + 'px', height: size + 'px' }">
+    <use :xlink:href="'#icon-' + name" :fill="color" />
+  </svg>
 </template>
 
 <script lang="ts" setup>
-const str = ref('');
-
-onMounted(() => {
-  console.log();
+defineProps({
+  name: {
+    type: String,
+    required: true
+  },
+  color: {
+    type: String,
+    default: ''
+  },
+  size: {
+    type: Number,
+    default: 20
+  }
 });
 </script>
 
