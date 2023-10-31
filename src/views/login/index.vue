@@ -1,6 +1,7 @@
 <template>
   <div class="formContent">
     <div class="formLogin">
+      <div class="title">登 录</div>
       <el-form ref="formRef" :model="formData">
         <el-form-item label="" prop="account">
           <el-input v-model="formData.account" placeholder="请输入账号：admin" />
@@ -42,12 +43,19 @@ const submitForm = async () => {
   position: absolute;
   top: 40%;
   left: 50%;
-  width: 320px;
-  padding: 45px 45px 20px;
+  width: 400px;
+  padding: 30px 45px 20px;
   background-color: #5d646b;
   border-radius: 5px;
   opacity: 0.9;
   transform: translate(-50%, -50%);
+  .title {
+    height: 40px;
+    margin-bottom: 10px;
+    font-size: 24px;
+    color: #fff;
+    text-align: center;
+  }
   .el-button {
     width: 100%;
   }
