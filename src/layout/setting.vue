@@ -1,10 +1,10 @@
 <template>
-  <el-drawer v-model="isShowSetting" title="页面配置" size="400px">
+  <el-drawer v-model="isShowSetting" title="页面配置" size="380px">
     <div class="setting-container">
       <div class="setting-layout">
         <span class="setting-label">导航布局</span>
         <el-radio-group v-model="layout">
-          <div v-for="(item, index) in LAYOUT_OPTION" :key="index" class="setting-layout-drawer">
+          <div v-for="(item, index) in LAYOUT_OPTION" :key="index">
             <el-radio-button :label="item">
               <img :src="getImageUrl(item)" alt="" />
             </el-radio-button>
@@ -86,6 +86,11 @@ watch(headerBackground, () => {
     margin-right: 12px;
     border: 3px solid #e8e8e8;
     border-left-width: 3px !important;
+  }
+  > div:nth-child(3) {
+    .el-radio-button__inner {
+      margin-right: 0;
+    }
   }
   .el-radio-button__original-radio:checked + .el-radio-button__inner {
     background-color: #fff;
