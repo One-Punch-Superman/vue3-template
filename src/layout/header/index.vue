@@ -11,8 +11,8 @@
       <Aside />
     </div>
     <div class="menu"></div>
-    <el-icon><Search /></el-icon>
-    <el-icon><Bell /></el-icon>
+    <el-icon :size="18"><Search /></el-icon>
+    <el-icon :size="18"><Bell /></el-icon>
     <div class="info">
       <el-avatar>
         <img src="@/assets/logo.png" alt="" />
@@ -32,14 +32,13 @@
         </template>
       </el-dropdown>
     </div>
-    <el-icon class="icon-setting" @click="changeLayout">
+    <el-icon :size="18" class="icon-setting" @click="changeLayout">
       <Setting />
     </el-icon>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { Expand, Fold, Search, Bell, Setting, ArrowDown } from '@element-plus/icons-vue';
 import { useSettingStore, useUserStore } from '@/store';
 import Aside from '@/layout/aside/index.vue';
 
@@ -49,9 +48,6 @@ const userStore = useUserStore();
 const { layout, isSidebarCompact } = storeToRefs(settingStore);
 const { userInfo } = storeToRefs(userStore);
 
-onMounted(() => {
-  userStore.getUserInfo();
-});
 const changeLayout = () => {
   settingStore.updateConfig({
     isShowSetting: true

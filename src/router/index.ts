@@ -55,19 +55,16 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
   const userStore = getUserStore();
-  const { token } = userStore;
+  const { token, userInfo } = userStore;
   if (token) {
-    if (to.path === '/login') {
-      next('/');
+    if (userInfo.name) {
+      to.path === '/login' ? next('/') : next();
     } else {
+      await userStore.getUserInfo();
       next();
     }
   } else {
-    if (whiteList.includes(to.path)) {
-      next();
-    } else {
-      next(`/login?redirect=${to.path}`);
-    }
+    whiteList.includes(to.path) ? next() : next(`/login?redirect=${to.path}`);
   }
 });
 

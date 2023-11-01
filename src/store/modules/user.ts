@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia';
 import store from '@/store';
-import { login } from '@/api/user';
+import { login, getInfo } from '@/api/user';
 
-const InitUserInfo = {
+const initUserInfo = {
   name: '',
   roles: ['']
 };
@@ -11,22 +11,23 @@ export const useUserStore = defineStore('user', {
   state: () => {
     return {
       token: '',
-      userInfo: { ...InitUserInfo }
+      userInfo: { ...initUserInfo }
     };
   },
   getters: {},
   actions: {
     async userLogin() {
-      // const data = await login();
-      const response = {
+      // const res = await login();
+      const res = {
         code: 200,
         message: '登陆成功',
         data: 'token_***'
       };
-      this.token = response.data;
+      this.token = res.data;
     },
     async getUserInfo() {
-      const response = {
+      // const res = await getInfo();
+      const res = {
         code: 200,
         message: '请求成功',
         data: {
@@ -34,11 +35,11 @@ export const useUserStore = defineStore('user', {
           roles: ['admin']
         }
       };
-      this.userInfo = response.data;
+      this.userInfo = res.data;
     },
     async logout() {
       this.token = '';
-      this.userInfo = { ...InitUserInfo };
+      this.userInfo = { ...initUserInfo };
     }
   },
   persist: true

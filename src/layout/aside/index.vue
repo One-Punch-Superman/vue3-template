@@ -9,7 +9,7 @@
       :default-active="active"
       :mode="layout === 'top' ? 'horizontal' : 'vertical'"
       :collapse="layout === 'top' ? false : isSidebarCompact"
-      unique-opened="true"
+      :unique-opened="true"
     >
       <SubMenu :menu-list="menuList" />
     </el-menu>
