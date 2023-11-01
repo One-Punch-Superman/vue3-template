@@ -41,7 +41,7 @@ onMounted(() => {
 const changeCollapsed = () => {
   settingStore.updateConfig({
     isSidebarCompact: !isSidebarCompact.value,
-    sidebarWidth: !isSidebarCompact.value ? '65px' : '250px'
+    sidebarWidth: !isSidebarCompact.value ? '65px' : '230px'
   });
 };
 </script>

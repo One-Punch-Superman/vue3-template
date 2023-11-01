@@ -111,7 +111,6 @@ const handleCopy = () => {
   .main {
     min-height: calc(100vh - 100px);
     background-color: #fff;
-    box-sizing: border-box;
     flex: 1;
   }
   .sidebar {
@@ -123,7 +122,6 @@ const handleCopy = () => {
       font-size: 14px;
       background-color: #fff;
       border-left: 1px solid rgb(0 0 0 / 10%);
-      box-sizing: border-box;
       > span {
         display: block;
         height: 32px;
@@ -138,7 +136,6 @@ const handleCopy = () => {
         line-height: 32px;
         text-overflow: ellipsis;
         white-space: nowrap;
-        box-sizing: border-box;
         span {
           cursor: pointer;
         }
