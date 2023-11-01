@@ -1,5 +1,5 @@
 <template>
-  <el-drawer v-model="isShowSetting" title="页面配置" size="380px">
+  <el-drawer v-model="isShowSetting" title="页面配置" size="385px">
     <div class="setting-container">
       <div class="setting-layout">
         <span class="setting-label">导航布局</span>
