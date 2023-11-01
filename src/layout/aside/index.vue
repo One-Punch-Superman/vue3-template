@@ -40,8 +40,7 @@ onMounted(() => {
 
 const changeCollapsed = () => {
   settingStore.updateConfig({
-    isSidebarCompact: !isSidebarCompact.value,
-    sidebarWidth: !isSidebarCompact.value ? '65px' : '230px'
+    isSidebarCompact: !isSidebarCompact.value
   });
 };
 </script>
@@ -50,16 +49,16 @@ const changeCollapsed = () => {
 .header-log {
   display: flex;
   align-items: center;
-  height: 60px;
+  height: $layout-header-height;
   padding-left: 20px;
 }
 .el-menu {
   position: relative;
-  height: calc(100vh - 60px);
+  height: calc(100vh - $layout-header-height);
   border-right: 0;
 }
 .el-menu--horizontal {
-  height: 60px;
+  height: $layout-header-height;
 }
 .mix-collapse {
   position: absolute;

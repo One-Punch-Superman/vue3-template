@@ -55,8 +55,7 @@ const changeLayout = () => {
 };
 const changeCollapsed = () => {
   settingStore.updateConfig({
-    isSidebarCompact: !isSidebarCompact.value,
-    sidebarWidth: !isSidebarCompact.value ? '65px' : '230px'
+    isSidebarCompact: !isSidebarCompact.value
   });
 };
 
@@ -79,6 +78,10 @@ const linkTo = (command: string) => {
   .info {
     display: flex;
     align-items: center;
+    .el-avatar {
+      width: 35px;
+      height: 35px;
+    }
     .el-dropdown {
       margin-right: 15px;
       margin-left: 10px;
@@ -95,8 +98,8 @@ const linkTo = (command: string) => {
 .header-log {
   display: flex;
   align-items: center;
-  width: 230px;
-  height: 60px;
+  width: $layout-aside-width;
+  height: $layout-header-height;
 }
 </style>
 <style>

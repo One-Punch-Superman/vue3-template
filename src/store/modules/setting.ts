@@ -6,7 +6,6 @@ export const useSettingStore = defineStore('setting', {
     return {
       ...SETTING_CONFIG,
       isSidebarCompact: false, // 是否收缩sideBar
-      sidebarWidth: '230px', // sideBar宽度
       isShowSetting: false
     };
   },
