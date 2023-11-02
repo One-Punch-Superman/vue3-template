@@ -31,7 +31,7 @@ export const allRoutes: Array<RouteRecordRaw> = [
   {
     path: '/404',
     name: 'notFound',
-    component: () => import('@/views/notFound/index.vue')
+    component: () => import('@/components/notFound/index.vue')
   },
   {
     path: '/:pathMatch(.*)*',

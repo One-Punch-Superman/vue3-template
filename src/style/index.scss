@@ -38,6 +38,7 @@
   }
 }
 .el-pagination {
+  margin-top: 20px;
   .el-select .el-input {
     width: 110px;
   }
@@ -53,7 +54,7 @@
   color: #fff;
 }
 .container {
-  height: calc(100vh - $layout-header-height - 2 * $layout-main-padding);
+  min-height: calc(100vh - $layout-header-height - 2 * $layout-main-padding);
   padding: 20px;
   overflow: hidden;
   color: #333;
