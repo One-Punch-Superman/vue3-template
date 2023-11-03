@@ -6,6 +6,7 @@
   <el-scrollbar>
     <el-menu
       :background-color="layout === 'top' ? headerBackground : asideBackground"
+      :text-color="textColor"
       :default-active="active"
       :mode="layout === 'top' ? 'horizontal' : 'vertical'"
       :collapse="layout === 'top' ? false : isSidebarCompact"
@@ -25,10 +26,13 @@ import { storeToRefs } from 'pinia';
 import { useSettingStore } from '@/store';
 import SubMenu from './SubMenu.vue';
 import menuList from './menu';
+import { dynamicColor } from '@/utils/color';
 
 const route = useRoute();
 const settingStore = useSettingStore();
 const { layout, headerBackground, asideBackground, isSidebarCompact } = storeToRefs(settingStore);
+
+const textColor = computed(() => dynamicColor(asideBackground.value));
 
 const active = computed(() => {
   return route.path;

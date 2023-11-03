@@ -1,5 +1,5 @@
 <template>
-  <div class="layout-header">
+  <div class="layout-header" :style="{ color: textColor }">
     <div v-if="layout !== 'side'" class="header-log">
       <img width="180" src="@/assets/image/assets-logo-full.svg" alt="logo" />
     </div>
@@ -11,14 +11,14 @@
       <Aside />
     </div>
     <div class="menu"></div>
-    <el-icon :size="18"><Search /></el-icon>
-    <el-icon :size="18"><Bell /></el-icon>
+    <el-icon :size="18" :color="textColor"><Search /></el-icon>
+    <el-icon :size="18" :color="textColor"><Bell /></el-icon>
     <div class="info">
       <el-avatar>
         <img src="@/assets/logo.png" alt="" />
       </el-avatar>
       <el-dropdown trigger="click" size="large" @command="linkTo">
-        <span class="dropdown-name">
+        <span :style="{ color: textColor }">
           {{ userInfo.name }}
           <el-icon class="el-icon--right">
             <arrow-down />
@@ -41,13 +41,15 @@
 <script lang="ts" setup>
 import { useSettingStore, useUserStore } from '@/store';
 import Aside from '@/layout/aside/index.vue';
+import { dynamicColor } from '@/utils/color';
 
 const router = useRouter();
 const settingStore = useSettingStore();
 const userStore = useUserStore();
-const { layout, isSidebarCompact } = storeToRefs(settingStore);
+const { layout, isSidebarCompact, headerBackground } = storeToRefs(settingStore);
 const { userInfo } = storeToRefs(userStore);
 
+const textColor = computed(() => dynamicColor(headerBackground.value));
 const changeLayout = () => {
   settingStore.updateConfig({
     isShowSetting: true
@@ -102,7 +104,7 @@ const linkTo = (command: string) => {
   height: $layout-header-height;
 }
 </style>
-<style>
+<!-- <style>
 @media (prefers-color-scheme: dark) {
   .layout-header .el-icon,
   .layout-header .dropdown-name {
@@ -115,4 +117,4 @@ const linkTo = (command: string) => {
     color: #fff !important;
   }
 }
-</style>
+</style> -->
