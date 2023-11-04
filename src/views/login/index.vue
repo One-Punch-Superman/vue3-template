@@ -21,6 +21,7 @@ import { useUserStore } from '@/store';
 import { ElMessage } from 'element-plus';
 
 const router = useRouter();
+const route = useRoute();
 const userStore = useUserStore();
 const formRef = ref();
 const formData = ref({ account: 'admin', password: 'admin' });
@@ -28,7 +29,9 @@ const formData = ref({ account: 'admin', password: 'admin' });
 const submitForm = async () => {
   await userStore.userLogin();
   ElMessage.success('登录成功');
-  router.push('/');
+  const redirect = route.query.redirect as string;
+  const url = redirect ? decodeURIComponent(redirect) : '/';
+  router.push(url);
 };
 </script>
 <style lang="scss" scoped>

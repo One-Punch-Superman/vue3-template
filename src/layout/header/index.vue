@@ -64,8 +64,13 @@ const changeCollapsed = () => {
 const linkTo = (command: string) => {
   if (command == 'logout') {
     userStore.logout();
+    router.push({
+      path: '/login',
+      query: { redirect: encodeURIComponent(router.currentRoute.value.fullPath) }
+    });
+  } else {
+    router.push(`/${command}`);
   }
-  router.push(`/${command}`);
 };
 </script>
 

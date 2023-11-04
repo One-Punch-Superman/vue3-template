@@ -15,8 +15,8 @@
       <SubMenu :menu-list="menuList" />
     </el-menu>
     <div class="mix-collapse" v-if="layout === 'mix'">
-      <el-icon :size="20" v-if="isSidebarCompact" @click="changeCollapsed"><Expand /></el-icon>
-      <el-icon :size="20" v-else @click="changeCollapsed"><Fold /></el-icon>
+      <el-icon :size="20" :color="textColor" v-if="isSidebarCompact" @click="changeCollapsed"><Expand /></el-icon>
+      <el-icon :size="20" :color="textColor" v-else @click="changeCollapsed"><Fold /></el-icon>
     </div>
   </el-scrollbar>
 </template>

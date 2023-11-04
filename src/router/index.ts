@@ -57,14 +57,21 @@ router.beforeEach(async (to, from, next) => {
   const userStore = getUserStore();
   const { token, userInfo } = userStore;
   if (token) {
-    if (userInfo.name) {
-      to.path === '/login' ? next('/') : next();
-    } else {
-      await userStore.getUserInfo();
-      next();
+    if (to.path === '/login') {
+      next('/');
+      return;
     }
+    if (!userInfo.name) {
+      try {
+        await userStore.getUserInfo();
+      } catch (error) {
+        userStore.logout();
+        next(`/login?redirect=${encodeURIComponent(to.fullPath)}`);
+      }
+    }
+    next();
   } else {
-    whiteList.includes(to.path) ? next() : next(`/login?redirect=${to.path}`);
+    whiteList.includes(to.path) ? next() : next(`/login?redirect=${encodeURIComponent(to.fullPath)}`);
   }
 });
 
