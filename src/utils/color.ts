@@ -1,6 +1,5 @@
 //根据深浅色背景，返回黑白文字颜色。
 export function dynamicColor(bg: string) {
-  console.log('传入颜色：', bg);
   if (!bg) {
     //默认中色
     return '#999';
