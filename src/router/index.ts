@@ -2,7 +2,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import { getUserStore } from '@/store';
 import Layout from '@/layout/index.vue';
 
-const modules: any = import.meta.globEager('./modules/**/*.ts');
+const modules: any = import.meta.glob('./modules/**/*.ts', { eager: true });
 const moduleRoute: Array<RouteRecordRaw> = [];
 Object.keys(modules).forEach((key) => {
   const mod = modules[key].default || {};
@@ -18,11 +18,11 @@ export const allRoutes: Array<RouteRecordRaw> = [
   },
   {
     path: '/',
-    name: 'home',
     component: Layout,
     children: [
       {
         path: '',
+        name: 'home',
         component: () => import('@/views/home/index.vue')
       }
     ]

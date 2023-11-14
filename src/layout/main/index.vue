@@ -1,6 +1,12 @@
 <template>
   <div class="layout-main">
-    <router-view> </router-view>
+    <router-view v-slot="{ Component, route }">
+      <transition name="animation" mode="out-in">
+        <div>
+          <component :is="Component" :key="route.path" />
+        </div>
+      </transition>
+    </router-view>
   </div>
 </template>
 

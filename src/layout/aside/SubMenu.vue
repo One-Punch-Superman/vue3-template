@@ -1,38 +1,41 @@
 <template>
-  <template v-for="subItem in menuList" :key="subItem.path">
-    <el-sub-menu v-if="subItem.children && subItem.children.length > 0" :index="subItem.path">
+  <template v-for="item in menuList" :key="item.path">
+    <el-sub-menu v-if="item.children && item.children.length > 0" :index="item.path">
       <template #title>
-        <el-icon>
-          <component :is="subItem.icon"></component>
+        <el-icon v-if="item.icon">
+          <component :is="item.icon"></component>
         </el-icon>
-        <span>{{ subItem.title }}</span>
+        <span>{{ item.title }}</span>
       </template>
-      <SubMenu :menuList="subItem.children" />
+      <SubMenu :menuList="item.children" />
     </el-sub-menu>
-    <el-menu-item v-else :index="subItem.path" @click="handleClickMenu(subItem)">
-      <el-icon>
-        <component :is="subItem.icon"></component>
+    <el-menu-item v-else :index="item.path" @click="handleClickMenu(item)">
+      <el-icon v-if="item.icon">
+        <component :is="item.icon"></component>
       </el-icon>
-      <template #title>
-        <span>{{ subItem.title }}</span>
-      </template>
+      <span>{{ item.title }}</span>
     </el-menu-item>
   </template>
 </template>
 
 <script setup lang="ts">
-defineProps<{ menuList: Menu.MenuOptions[] }>();
+defineProps({
+  menuList: {
+    type: Array<any>,
+    required: true
+  }
+});
 
 const router = useRouter();
-const handleClickMenu = (subItem: Menu.MenuOptions) => {
-  if (subItem.isLink) {
-    window.open(subItem.isLink, '_blank');
+const handleClickMenu = (item: any) => {
+  if (item.isLink) {
+    window.open(item.isLink, '_blank');
   }
-  router.push(subItem.path);
+  router.push(item.path);
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .el-menu,
 .el-menu--popup {
   .el-menu-item {
