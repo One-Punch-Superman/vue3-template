@@ -62,18 +62,3 @@
   border: 1px solid #e4e7ed;
   box-shadow: 0 0 12px rgb(0 0 0 / 12%);
 }
-.animation-enter-from,
-.animation-leave-to {
-  opacity: 0;
-  transform: translateX(20px);
-}
-.animation-enter-to,
-.animation-leave-from {
-  opacity: 1;
-}
-.animation-enter-active {
-  transition: all 0.7s ease;
-}
-.animation-leave-active {
-  transition: all 0.3s cubic-bezier(1, 0.6, 0.6, 1);
-}
