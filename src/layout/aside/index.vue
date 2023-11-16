@@ -14,11 +14,11 @@
     >
       <SubMenu :menu-list="menuList" />
     </el-menu>
-    <div class="mix-collapse" v-if="layout === 'mix'">
-      <el-icon :size="20" :color="textColor" v-if="isSidebarCompact" @click="changeCollapsed"><Expand /></el-icon>
-      <el-icon :size="20" :color="textColor" v-else @click="changeCollapsed"><Fold /></el-icon>
-    </div>
   </el-scrollbar>
+  <div class="mix-collapse" v-if="layout === 'mix'">
+    <el-icon :size="20" :color="textColor" v-if="isSidebarCompact" @click="changeCollapsed"><Expand /></el-icon>
+    <el-icon :size="20" :color="textColor" v-else @click="changeCollapsed"><Fold /></el-icon>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -56,17 +56,21 @@ const changeCollapsed = () => {
   height: $layout-header-height;
   padding-left: 20px;
 }
+.el-scrollbar {
+  height: calc(100vh - $layout-header-height - 40px);
+}
 .el-menu {
   position: relative;
-  height: calc(100vh - $layout-header-height);
+  height: calc(100vh - $layout-header-height - 40px);
   border-right: 0;
 }
 .el-menu--horizontal {
   height: $layout-header-height;
 }
 .mix-collapse {
-  position: absolute;
-  right: 20px;
-  bottom: 15px;
+  position: relative;
+  top: 8px;
+  right: 22px;
+  float: right;
 }
 </style>
