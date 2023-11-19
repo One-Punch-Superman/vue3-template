@@ -67,18 +67,6 @@ const { layout, headerBackground, asideBackground, showFooter, isSidebarCompact 
     height: calc(100vh - $layout-header-height);
     padding: $layout-main-padding;
   }
-  .el-main::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
-  .el-main::-webkit-scrollbar-thumb {
-    background: rgb(0 0 0 / 20%);
-    border-radius: 5px;
-  }
-  .el-main::-webkit-scrollbar-track {
-    background: rgb(0 0 0 / 10%);
-    border-radius: 0;
-  }
   .el-footer {
     height: 40px;
   }

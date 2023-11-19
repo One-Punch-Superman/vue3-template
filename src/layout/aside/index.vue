@@ -3,18 +3,16 @@
     <img v-if="!isSidebarCompact" width="180" height="60" src="@/assets/image/assets-logo-full.svg" alt="logo" />
     <img v-else width="28" height="60" src="@/assets/image/assets-t-logo.svg" alt="logo" />
   </div>
-  <el-scrollbar>
-    <el-menu
-      :background-color="layout === 'top' ? headerBackground : asideBackground"
-      :text-color="textColor"
-      :default-active="active"
-      :mode="layout === 'top' ? 'horizontal' : 'vertical'"
-      :collapse="layout === 'top' ? false : isSidebarCompact"
-      :unique-opened="true"
-    >
-      <SubMenu :menu-list="menuList" />
-    </el-menu>
-  </el-scrollbar>
+  <el-menu
+    :background-color="layout === 'top' ? headerBackground : asideBackground"
+    :text-color="textColor"
+    :default-active="active"
+    :mode="layout === 'top' ? 'horizontal' : 'vertical'"
+    :collapse="layout === 'top' ? false : isSidebarCompact"
+    :unique-opened="true"
+  >
+    <SubMenu :menu-list="menuList" />
+  </el-menu>
   <div class="mix-collapse" v-if="layout === 'mix'">
     <el-icon :size="20" :color="textColor" v-if="isSidebarCompact" @click="changeCollapsed"><Expand /></el-icon>
     <el-icon :size="20" :color="textColor" v-else @click="changeCollapsed"><Fold /></el-icon>
@@ -56,13 +54,14 @@ const changeCollapsed = () => {
   height: $layout-header-height;
   padding-left: 20px;
 }
-.el-scrollbar {
-  height: calc(100vh - $layout-header-height - 40px);
-}
 .el-menu {
   position: relative;
   height: calc(100vh - $layout-header-height - 40px);
+  overflow: auto;
   border-right: 0;
+}
+.el-menu::-webkit-scrollbar {
+  display: none;
 }
 .el-menu--horizontal {
   height: $layout-header-height;
