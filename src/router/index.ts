@@ -2,13 +2,8 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import { getUserStore } from '@/store';
 import Layout from '@/layout/index.vue';
 
-const modules: any = import.meta.glob('./modules/**/*.ts', { eager: true });
-const moduleRoute: Array<RouteRecordRaw> = [];
-Object.keys(modules).forEach((key) => {
-  const mod = modules[key].default || {};
-  const modList = Array.isArray(mod) ? [...mod] : [mod];
-  moduleRoute.push(...modList);
-});
+import system from './modules/system';
+import others from './modules/others';
 
 export const allRoutes: Array<RouteRecordRaw> = [
   {
@@ -24,10 +19,11 @@ export const allRoutes: Array<RouteRecordRaw> = [
         path: '',
         name: 'home',
         component: () => import('@/views/home/index.vue')
-      }
+      },
+      ...system,
+      ...others
     ]
   },
-  ...moduleRoute,
   {
     path: '/404',
     name: 'notFound',
