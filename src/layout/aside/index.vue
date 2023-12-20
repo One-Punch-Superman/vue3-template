@@ -1,8 +1,9 @@
 <template>
-  <div v-if="layout === 'side'" class="header-log">
-    <img v-if="!isSidebarCompact" width="180" height="60" src="@/assets/image/assets-logo-full.svg" alt="logo" />
-    <img v-else width="28" height="60" src="@/assets/image/assets-t-logo.svg" alt="logo" />
+  <div v-if="layout === 'side'" class="header-logo">
+    <SvgIcon name="resource" size="32"></SvgIcon>
+    <span v-if="!isSidebarCompact" class="logo">后台管理系统</span>
   </div>
+
   <el-menu
     :background-color="layout === 'top' ? headerBackground : asideBackground"
     :text-color="textColor"
@@ -13,6 +14,7 @@
   >
     <SubMenu :menu-list="menuList" />
   </el-menu>
+
   <div class="mix-collapse" v-if="layout === 'mix'">
     <el-icon :size="20" :color="textColor" v-if="isSidebarCompact" @click="changeCollapsed"><Expand /></el-icon>
     <el-icon :size="20" :color="textColor" v-else @click="changeCollapsed"><Fold /></el-icon>
@@ -36,10 +38,6 @@ const active = computed(() => {
   return route.path;
 });
 
-onMounted(() => {
-  console.log();
-});
-
 const changeCollapsed = () => {
   settingStore.updateConfig({
     isSidebarCompact: !isSidebarCompact.value
@@ -48,11 +46,17 @@ const changeCollapsed = () => {
 </script>
 
 <style lang="scss" scoped>
-.header-log {
+.header-logo {
   display: flex;
   align-items: center;
   height: $layout-header-height;
   padding-left: 20px;
+  cursor: pointer;
+  .logo {
+    margin-left: 5px;
+    font-size: 22px;
+    font-weight: bold;
+  }
 }
 .el-menu {
   position: relative;

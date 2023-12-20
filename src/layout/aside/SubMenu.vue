@@ -27,6 +27,7 @@ defineProps({
 });
 
 const router = useRouter();
+
 const handleClickMenu = (item: any) => {
   if (item.isLink) {
     window.open(item.isLink, '_blank');
@@ -36,20 +37,6 @@ const handleClickMenu = (item: any) => {
 </script>
 
 <style lang="scss" scoped>
-.el-menu,
-.el-menu--popup {
-  .el-menu-item {
-    &.is-active {
-      color: #fff;
-      background-color: #1e7cda;
-    }
-  }
-}
-.el-menu--vertical > .el-sub-menu.is-active:not(.is-opened) {
-  .el-icon {
-    color: #1e7cda;
-  }
-}
 .el-menu--horizontal > .el-menu-item {
   color: #fff;
 }

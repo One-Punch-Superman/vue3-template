@@ -1,28 +1,30 @@
 <template>
   <div class="layout-header" :style="{ color: textColor }">
-    <div v-if="layout !== 'side'" class="header-log">
-      <img width="180" src="@/assets/image/assets-logo-full.svg" alt="logo" />
+    <div v-if="layout !== 'side'" class="header-logo">
+      <SvgIcon name="resource" size="32"></SvgIcon>
+      <span class="logo">后台管理系统</span>
     </div>
-    <div v-if="layout === 'side'">
+    <div v-else>
       <el-icon :size="20" v-if="isSidebarCompact" @click="changeCollapsed"><Expand /></el-icon>
       <el-icon :size="20" v-else @click="changeCollapsed"><Fold /></el-icon>
     </div>
-    <div class="but" v-if="layout === 'top'">
+
+    <div v-if="layout === 'top'">
       <Aside />
     </div>
+
     <div class="menu"></div>
+
     <el-icon :size="18" :color="textColor"><Search /></el-icon>
     <el-icon :size="18" :color="textColor"><Bell /></el-icon>
     <div class="info">
       <el-avatar>
         <img src="@/assets/logo.png" alt="" />
       </el-avatar>
-      <el-dropdown trigger="click" size="large" @command="linkTo">
+      <el-dropdown trigger="click" @command="linkTo">
         <span :style="{ color: textColor }">
           {{ userInfo.name }}
-          <el-icon class="el-icon--right">
-            <arrow-down />
-          </el-icon>
+          <el-icon class="el-icon--right"><ArrowDownBold /></el-icon>
         </span>
         <template #dropdown>
           <el-dropdown-menu>
@@ -102,11 +104,17 @@ const linkTo = (command: string) => {
     margin-right: 5px;
   }
 }
-.header-log {
+.header-logo {
   display: flex;
   align-items: center;
   width: $layout-aside-width;
   height: $layout-header-height;
+  cursor: pointer;
+  .logo {
+    margin-left: 5px;
+    font-size: 22px;
+    font-weight: bold;
+  }
 }
 </style>
 <!-- <style>
