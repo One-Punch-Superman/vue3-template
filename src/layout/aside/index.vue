@@ -34,7 +34,7 @@ const { layout, headerBackground, asideBackground, isSidebarCompact } = storeToR
 
 const textColor = computed(() => {
   const background = layout.value === 'top' ? headerBackground.value : asideBackground.value;
-  dynamicColor(background);
+  return dynamicColor(background);
 });
 
 const active = computed(() => {
@@ -74,6 +74,7 @@ const changeCollapsed = () => {
 }
 .el-menu--horizontal {
   height: $layout-header-height;
+  border-bottom: 0;
 }
 .mix-collapse {
   position: relative;
