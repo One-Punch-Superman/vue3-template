@@ -1,7 +1,7 @@
 <template>
   <div class="layout-header" :style="{ color: textColor }">
     <div v-if="layout !== 'side'" class="header-logo">
-      <SvgIcon name="resource" size="32"></SvgIcon>
+      <SvgIcon name="resource" size="32" :color="textColor"></SvgIcon>
       <span class="logo">后台管理系统</span>
     </div>
     <div v-else>
@@ -111,7 +111,7 @@ const linkTo = (command: string) => {
   height: $layout-header-height;
   cursor: pointer;
   .logo {
-    margin-left: 5px;
+    margin-left: 15px;
     font-size: 22px;
     font-weight: bold;
   }

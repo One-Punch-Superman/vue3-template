@@ -36,23 +36,4 @@ const handleClickMenu = (item: any) => {
 };
 </script>
 
-<style lang="scss" scoped>
-.el-menu--horizontal > .el-menu-item {
-  color: #fff;
-}
-.el-menu--horizontal > .el-menu-item.is-active {
-  color: #fff !important;
-}
-.el-menu--horizontal > .el-sub-menu .el-sub-menu__title {
-  color: #fff !important;
-}
-.el-menu--horizontal {
-  .el-menu .el-menu-item,
-  .el-menu .el-sub-menu__title {
-    color: #fff;
-  }
-  .el-sub-menu.is-active {
-    color: #fff;
-  }
-}
-</style>
+<style lang="scss" scoped></style>

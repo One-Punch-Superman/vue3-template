@@ -1,6 +1,6 @@
 <template>
-  <div v-if="layout === 'side'" class="header-logo">
-    <SvgIcon name="resource" size="32"></SvgIcon>
+  <div v-if="layout === 'side'" class="header-logo" :style="{ color: textColor }">
+    <SvgIcon name="resource" size="32" :color="textColor"></SvgIcon>
     <span v-if="!isSidebarCompact" class="logo">后台管理系统</span>
   </div>
 
@@ -32,7 +32,10 @@ const route = useRoute();
 const settingStore = useSettingStore();
 const { layout, headerBackground, asideBackground, isSidebarCompact } = storeToRefs(settingStore);
 
-const textColor = computed(() => dynamicColor(asideBackground.value));
+const textColor = computed(() => {
+  const background = layout.value === 'top' ? headerBackground.value : asideBackground.value;
+  dynamicColor(background);
+});
 
 const active = computed(() => {
   return route.path;
@@ -53,7 +56,9 @@ const changeCollapsed = () => {
   padding-left: 20px;
   cursor: pointer;
   .logo {
-    margin-left: 5px;
+    height: 26px;
+    margin-left: 15px;
+    overflow: hidden;
     font-size: 22px;
     font-weight: bold;
   }
