@@ -38,7 +38,6 @@
 </template>
 
 <script lang="ts" setup>
-import { storeToRefs } from 'pinia';
 import Header from '@/layout/header/index.vue';
 import Aside from '@/layout/aside/index.vue';
 import Main from '@/layout/main/index.vue';
