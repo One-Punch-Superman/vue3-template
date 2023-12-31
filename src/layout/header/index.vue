@@ -46,8 +46,8 @@ import Aside from '@/layout/aside/index.vue';
 import { dynamicColor } from '@/utils/color';
 
 const router = useRouter();
-const settingStore = useSettingStore();
 const userStore = useUserStore();
+const settingStore = useSettingStore();
 const { layout, isSidebarCompact, headerBackground } = storeToRefs(settingStore);
 const { userInfo } = storeToRefs(userStore);
 

@@ -63,6 +63,8 @@ const { layout, headerBackground, asideBackground, showFooter, isSidebarCompact 
     transition: width 0.3s;
   }
   .el-main {
+    display: flex;
+    flex-direction: column;
     height: calc(100vh - $layout-header-height);
     padding: $layout-main-padding;
   }
