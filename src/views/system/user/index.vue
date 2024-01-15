@@ -31,7 +31,7 @@
       v-model:current-page="pageInfo.currentPage"
       v-model:page-size="pageInfo.pageSize"
       :total="pageInfo.total"
-      :getData="getList"
+      @getData="getList"
     />
 
     <el-dialog v-model="dialogVisible" :title="dialogTitle" @close="handleCancel" width="500px">
