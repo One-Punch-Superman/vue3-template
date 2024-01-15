@@ -1,14 +1,12 @@
 <template>
-  <div class="pagination-container">
-    <el-pagination
-      v-model:current-page="currentPage"
-      v-model:page-size="pageSize"
-      :total="total"
-      :page-sizes="pageSizes"
-      layout="total, sizes, prev, pager, next, jumper"
-      background
-    />
-  </div>
+  <el-pagination
+    v-model:current-page="currentPage"
+    v-model:page-size="pageSize"
+    :total="total"
+    :page-sizes="pageSizes"
+    layout="total, sizes, prev, pager, next, jumper"
+    background
+  />
 </template>
 
 <script lang="ts" setup>
@@ -57,7 +55,7 @@ const pageSize = computed({
 </script>
 
 <style scoped>
-.pagination-container {
+.el-pagination {
   display: flex;
   justify-content: end;
   margin-top: 20px;

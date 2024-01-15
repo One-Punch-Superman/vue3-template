@@ -27,16 +27,13 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination
-      v-model:current-page="currentPage"
-      v-model:page-size="pageSize"
-      :page-sizes="[10, 20, 50, 100]"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="total"
-      background
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
+    <Pagination
+      v-model:current-page="pageInfo.currentPage"
+      v-model:page-size="pageInfo.pageSize"
+      :total="pageInfo.total"
+      :getData="getList"
     />
+
     <el-dialog v-model="dialogVisible" :title="dialogTitle" @close="handleCancel" width="500px">
       <el-form :model="formData" ref="formRef" :rules="formRules" label-width="70px">
         <el-form-item label="用户名:" prop="username">
@@ -75,9 +72,11 @@ const searchName = ref('');
 const dataList = ref<any>([]);
 const roleList = ref<any>([]);
 
-const currentPage = ref(1);
-const pageSize = ref(10);
-const total = ref(0);
+const pageInfo = reactive({
+  currentPage: 1,
+  pageSize: 20,
+  total: 0
+});
 
 const dialogTitle = ref('');
 const dialogVisible = ref(false);
@@ -112,14 +111,14 @@ onMounted(() => {
 const getList = () => {
   const params = {
     username: searchName.value,
-    pageNo: currentPage.value,
-    pageSize: pageSize.value
+    pageNo: pageInfo.currentPage,
+    pageSize: pageInfo.pageSize
   };
   getUserList(params).then((res: any) => {
     if (res.code == 200) {
       const data = res.data;
       dataList.value = data.rows;
-      total.value = data.total;
+      pageInfo.total = data.total;
     }
   });
 };
@@ -210,16 +209,7 @@ const handleCancel = () => {
 };
 // 查询
 const handleSearch = () => {
-  currentPage.value = 1;
-  getList();
-};
-const handleSizeChange = (val: number) => {
-  currentPage.value = 1;
-  pageSize.value = val;
-  getList();
-};
-const handleCurrentChange = (val: number) => {
-  currentPage.value = val;
+  pageInfo.currentPage = 1;
   getList();
 };
 </script>
