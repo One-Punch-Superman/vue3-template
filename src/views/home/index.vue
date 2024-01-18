@@ -65,12 +65,23 @@ const onSubmit = () => {
 .demo-form-inline .el-select {
   --el-select-width: 220px;
 }
+
+// .el-form {
+//   margin-left: calc(-1 * (100% - 1280px) / 3);
+//   .el-form-item {
+//     float: left;
+//     width: 25%;
+//     padding-left: calc((100% - 1280px) / 4);
+//     margin-right: 0;
+//     box-sizing: border-box;
+//   }
+// }
 .el-form {
-  margin-left: calc(-1 * (100% - 1280px) / 3);
+  margin-left: calc(-1 * (100% - 1600px) / 4);
   .el-form-item {
     float: left;
-    width: 25%;
-    padding-left: calc((100% - 1280px) / 4);
+    width: 20%;
+    padding-left: calc((100% - 1600px) / 5);
     margin-right: 0;
     box-sizing: border-box;
   }
