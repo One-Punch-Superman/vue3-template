@@ -36,4 +36,23 @@ const handleClickMenu = (item: any) => {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.el-menu-item {
+  height: 45px;
+  margin: 4px 10px;
+  line-height: 45px;
+  border-radius: 4px;
+}
+.el-sub-menu .el-menu-item {
+  height: 45px;
+  line-height: 45px;
+}
+:deep(.el-sub-menu__title) {
+  height: 45px;
+  line-height: 45px;
+}
+.el-menu-item.is-active {
+  color: #fff;
+  background: #6a3f7e;
+}
+</style>
