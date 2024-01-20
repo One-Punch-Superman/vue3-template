@@ -31,7 +31,7 @@
       <el-form-item label="Activity time">
         <el-date-picker v-model="formInline.date" type="date" placeholder="Pick a date" clearable />
       </el-form-item>
-      <el-form-item label=" ">
+      <el-form-item label=" " style="float: right">
         <el-button type="primary" @click="onSubmit">Query</el-button>
       </el-form-item>
     </el-form>
