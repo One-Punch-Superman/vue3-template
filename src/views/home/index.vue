@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <el-form :inline="true" :model="formInline" label-width="100px" class="demo-form-inline">
+    <el-form :inline="true" :model="formInline" label-width="100px">
       <el-form-item label="Approved by">
         <el-input v-model="formInline.user" placeholder="Approved by" clearable />
       </el-form-item>
@@ -130,12 +130,6 @@ const onSubmit = () => {
 </script>
 
 <style lang="scss" scoped>
-// .demo-form-inline .el-input {
-//   --el-input-width: 220px;
-// }
-// .demo-form-inline .el-select {
-//   --el-select-width: 220px;
-// }
 .el-form {
   margin-left: calc(-1 * (100% - 1600px) / 4);
   .el-form-item {
