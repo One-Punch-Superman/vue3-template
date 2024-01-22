@@ -52,7 +52,8 @@ const handleClickMenu = (item: any) => {
   line-height: 45px;
 }
 .el-menu-item.is-active {
-  color: #fff;
-  background: #6a3f7e;
+  font-weight: bold;
+  color: #409eff;
+  background: #e7dcec;
 }
 </style>

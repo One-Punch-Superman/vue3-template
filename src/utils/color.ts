@@ -17,7 +17,7 @@ export function dynamicColor(bg: string) {
   }
   var bgcolor = bg.replace('rgb(', '').replace('rgba(', '').replace(')', '');
   var bgcolorArry = bgcolor.split(',');
-  return isLight(bgcolorArry) ? '#333' : '#fff'; //浅色背景就返回深色文字颜色。
+  return isLight(bgcolorArry) ? '#303133' : '#fff'; //浅色背景就返回深色文字颜色。
 }
 //是否浅色
 function isLight(rgb = [0, 0, 0]) {

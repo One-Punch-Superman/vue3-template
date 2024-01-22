@@ -13,11 +13,11 @@
       </div>
       <div class="setting-hander">
         <span class="setting-label">hander背景色</span>
-        <el-color-picker v-model="headerBackground" />
+        <el-color-picker v-model="headerBackground" :predefine="headerBackgroundColors" />
       </div>
       <div class="setting-sidebar">
         <span class="setting-label">sidebar背景色</span>
-        <el-color-picker v-model="asideBackground" />
+        <el-color-picker v-model="asideBackground" :predefine="asideBackgroundColors" />
       </div>
       <div class="setting-footer">
         <span class="setting-label">footer显示</span>
@@ -36,6 +36,8 @@ import { useSettingStore } from '@/store/index';
 const settingStore = useSettingStore();
 const { isShowSetting, layout, headerBackground, asideBackground, showFooter } = storeToRefs(settingStore);
 const LAYOUT_OPTION = ['side', 'top', 'mix'];
+const headerBackgroundColors = ref(['#ce4545', '#b71533', '#D0A8b0', '#388ADE', '#463CB1', '#201C4D']);
+const asideBackgroundColors = ref(['#caa7a7']);
 
 const getImageUrl = (name: string) => {
   return new URL(`/src/assets/image/${name}.png`, import.meta.url).href;
