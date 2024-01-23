@@ -19,7 +19,7 @@
     <el-icon :size="18" :color="textColor"><Bell /></el-icon>
     <div class="info">
       <el-avatar>
-        <img src="@/assets/logo.png" alt="" />
+        <img src="@/assets/logo.jpg" alt="" />
       </el-avatar>
       <el-dropdown trigger="click" @command="linkTo">
         <span :style="{ color: textColor }">

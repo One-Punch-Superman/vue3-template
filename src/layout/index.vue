@@ -51,15 +51,17 @@ const { layout, headerBackground, asideBackground, showFooter, isSidebarCompact 
 
 <style lang="scss" scoped>
 .layout-container {
-  background: #f0f2f5;
+  background: #f2f5f6;
   .el-header {
     height: $layout-header-height;
-    border-bottom: 1px solid #e8e8e8;
+
+    // border-bottom: 1px solid #e8e8e8;
   }
   .el-aside {
     width: $layout-aside-width;
     overflow: hidden;
-    border-right: 1px solid #e8e8e8;
+
+    // border-right: 1px solid #e8e8e8;
     transition: width 0.3s;
   }
   .el-main {
