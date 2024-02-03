@@ -56,4 +56,7 @@ const handleClickMenu = (item: any) => {
   color: #409eff;
   background: #e7dcec;
 }
+.el-menu-item:hover {
+  background: #e7dcec;
+}
 </style>
