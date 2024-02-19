@@ -15,7 +15,12 @@ export default defineConfig({
   plugins: [
     vue(),
     AutoImport({
-      imports: ['vue', 'vue-router', 'pinia']
+      imports: ['vue', 'vue-router', 'pinia'],
+      eslintrc: {
+        enabled: false,
+        filepath: './.eslintrc-auto-import.json',
+        globalsPropValue: true
+      }
     }),
     createSvgIconsPlugin({
       iconDirs: [path.resolve(process.cwd(), 'src/assets/icons')],
