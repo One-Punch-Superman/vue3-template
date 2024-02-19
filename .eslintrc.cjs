@@ -11,17 +11,14 @@ module.exports = {
     'plugin:vue/vue3-recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
-    // eslint-config-prettier 的缩写
+    // eslint-config-prettier的缩写
     'prettier',
     './.eslintrc-auto-import.json'
   ],
   parserOptions: {
-    ecmaVersion: 12,
-    parser: '@typescript-eslint/parser',
+    ecmaVersion: 'latest',
     sourceType: 'module',
-    ecmaFeatures: {
-      jsx: true
-    }
+    parser: '@typescript-eslint/parser'
   },
   // eslint-plugin-vue @typescript-eslint/eslint-plugin eslint-plugin-prettier的缩写
   plugins: ['vue', '@typescript-eslint', 'prettier'],
