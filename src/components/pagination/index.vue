@@ -68,8 +68,8 @@ const pageSize = computed({
   }
   button,
   .el-pager li {
-    height: 30px;
     min-width: 30px;
+    height: 30px;
   }
   .el-pagination__editor.el-input {
     width: 45px;

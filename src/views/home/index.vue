@@ -133,11 +133,12 @@ const onSubmit = () => {
 .el-form {
   margin-left: calc(-1 * (100% - 1600px) / 4);
   .el-form-item {
+    box-sizing: border-box;
+
     // float: left;
     width: 20%;
     padding-left: calc((100% - 1600px) / 5);
     margin-right: 0;
-    box-sizing: border-box;
   }
 }
 .clearfix::after {

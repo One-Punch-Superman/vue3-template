@@ -37,9 +37,9 @@ const submitForm = async () => {
 <style lang="scss" scoped>
 .formContent {
   height: 100vh;
-  background-attachment: fixed;
   background-image: url('@/assets/bg2.jpg');
   background-repeat: no-repeat;
+  background-attachment: fixed;
   background-size: cover;
 }
 .formLogin {
