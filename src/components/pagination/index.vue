@@ -48,20 +48,23 @@ const pageSize = computed({
     return props.pageSize;
   },
   set(val) {
+    emit('update:currentPage', 1);
     emit('update:pageSize', val);
     emit('getData');
   }
 });
 </script>
 
-<style scoped>
+<style lang="scss">
 .el-pagination {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   margin-top: 20px;
-  background: #fff;
-  .el-select .el-input {
+  .el-select {
     width: 110px;
+    .el-input {
+      width: 100%;
+    }
   }
   button,
   .el-pager li {
@@ -69,7 +72,7 @@ const pageSize = computed({
     min-width: 30px;
   }
   .el-pagination__editor.el-input {
-    width: 50px;
+    width: 45px;
   }
 }
 </style>

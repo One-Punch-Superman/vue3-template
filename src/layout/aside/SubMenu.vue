@@ -7,7 +7,7 @@
         </el-icon>
         <span>{{ item.title }}</span>
       </template>
-      <SubMenu :menuList="item.children" />
+      <SubMenu :menu-list="item.children" />
     </el-sub-menu>
     <el-menu-item v-else :index="item.path" @click="handleClickMenu(item)">
       <el-icon v-if="item.icon">
@@ -38,25 +38,27 @@ const handleClickMenu = (item: any) => {
 
 <style lang="scss" scoped>
 .el-menu-item {
-  height: 45px;
-  margin: 4px 10px;
-  line-height: 45px;
-  border-radius: 4px;
+  height: 48px;
+  margin: 4px 0;
+  line-height: 48px;
 }
 .el-sub-menu .el-menu-item {
-  height: 45px;
-  line-height: 45px;
+  height: 48px;
+  line-height: 48px;
 }
 :deep(.el-sub-menu__title) {
-  height: 45px;
-  line-height: 45px;
+  height: 48px;
+  line-height: 48px;
+}
+:deep(.el-sub-menu__title):hover {
+  background-color: transparent;
+}
+.el-menu-item:hover {
+  background: #e7dcec;
 }
 .el-menu-item.is-active {
   font-weight: bold;
   color: #409eff;
-  background: #e7dcec;
-}
-.el-menu-item:hover {
   background: #e7dcec;
 }
 </style>
