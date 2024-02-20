@@ -15,9 +15,9 @@
     <SubMenu :menu-list="menuList" />
   </el-menu>
 
-  <div class="mix-collapse" v-if="layout === 'mix'">
-    <el-icon :size="20" :color="textColor" v-if="isSidebarCompact" @click="changeCollapsed"><Expand /></el-icon>
-    <el-icon :size="20" :color="textColor" v-else @click="changeCollapsed"><Fold /></el-icon>
+  <div v-if="layout === 'mix'" class="mix-collapse">
+    <el-icon v-if="isSidebarCompact" :size="20" :color="textColor" @click="changeCollapsed"><Expand /></el-icon>
+    <el-icon v-else :size="20" :color="textColor" @click="changeCollapsed"><Fold /></el-icon>
   </div>
 </template>
 
@@ -56,7 +56,6 @@ const changeCollapsed = () => {
   padding-left: 20px;
   cursor: pointer;
   .logo {
-    height: 26px;
     margin-left: 15px;
     overflow: hidden;
     font-size: 22px;
@@ -72,7 +71,7 @@ const changeCollapsed = () => {
 .el-menu::-webkit-scrollbar {
   display: none;
 }
-.el-menu--horizontal {
+.el-menu--horizontal.el-menu {
   height: $layout-header-height;
   border-bottom: 0;
 }

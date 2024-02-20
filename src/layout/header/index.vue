@@ -5,8 +5,8 @@
       <span class="logo">后台管理系统</span>
     </div>
     <div v-else>
-      <el-icon :size="20" v-if="isSidebarCompact" @click="changeCollapsed"><Expand /></el-icon>
-      <el-icon :size="20" v-else @click="changeCollapsed"><Fold /></el-icon>
+      <el-icon v-if="isSidebarCompact" :size="20" @click="changeCollapsed"><Expand /></el-icon>
+      <el-icon v-else :size="20" @click="changeCollapsed"><Fold /></el-icon>
     </div>
 
     <div v-if="layout === 'top'">
@@ -64,7 +64,7 @@ const changeCollapsed = () => {
 };
 
 const linkTo = (command: string) => {
-  if (command == 'logout') {
+  if (command === 'logout') {
     userStore.logout();
     router.push({
       path: '/login',
