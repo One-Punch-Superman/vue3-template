@@ -63,7 +63,7 @@
       v-model:current-page="pageInfo.currentPage"
       v-model:page-size="pageInfo.pageSize"
       :total="pageInfo.total"
-      @getData="getList"
+      @get-data="getList"
     />
   </div>
   <!-- <SvgIcon name="resource"></SvgIcon> -->
