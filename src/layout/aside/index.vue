@@ -1,5 +1,5 @@
 <template>
-  <div v-if="layout === 'side'" class="header-logo" :style="{ color: textColor }">
+  <div v-if="layout === 'side'" class="header-logo" :style="{ color: textColor }" @click="toHome">
     <SvgIcon name="resource" size="32" :color="textColor"></SvgIcon>
     <span v-if="!isSidebarCompact" class="logo">后台管理系统</span>
   </div>
@@ -28,6 +28,7 @@ import SubMenu from './SubMenu.vue';
 import menuList from './menu';
 import { dynamicColor } from '@/utils/color';
 
+const router = useRouter();
 const route = useRoute();
 const settingStore = useSettingStore();
 const { layout, headerBackground, asideBackground, isSidebarCompact } = storeToRefs(settingStore);
@@ -45,6 +46,10 @@ const changeCollapsed = () => {
   settingStore.updateConfig({
     isSidebarCompact: !isSidebarCompact.value
   });
+};
+
+const toHome = () => {
+  router.push('/');
 };
 </script>
 
