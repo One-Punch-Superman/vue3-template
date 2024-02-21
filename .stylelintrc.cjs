@@ -23,6 +23,6 @@ module.exports = {
     'selector-class-pattern': null,
     'no-empty-source': null,
     'rule-empty-line-before': 'never',
-    'font-family-no-missing-generic-family-keyword': 'never'
+    'font-family-no-missing-generic-family-keyword': null
   }
 };
