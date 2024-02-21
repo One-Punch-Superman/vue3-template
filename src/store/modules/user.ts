@@ -1,8 +1,9 @@
 import { defineStore } from 'pinia';
 import store from '@/store';
+import type { UserInfo } from '@/types';
 import { login, getInfo } from '@/api/user';
 
-const initUserInfo = {
+const initUserInfo: UserInfo = {
   name: '',
   roles: ['']
 };
