@@ -63,7 +63,7 @@ module.exports = {
     // 禁止 if 语句中 return 语句之后有 else 块
     'no-else-return': 'warn',
     // 禁止出现空函数
-    'no-empty-function': 'warn',
+    'no-empty-function': 'off',
     // 禁用不必要的嵌套块
     'no-lone-blocks': 'warn',
     // 禁止使用多个空格
@@ -136,7 +136,6 @@ module.exports = {
     'switch-colon-spacing': 'warn',
     // 强制箭头函数的箭头前后使用一致的空格
     'arrow-spacing': 'warn',
-    'no-var': 'warn',
     'prefer-const': 'warn',
     'prefer-rest-params': 'warn',
     'no-useless-escape': 'warn',

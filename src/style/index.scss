@@ -4,6 +4,10 @@
   margin: 0;
   font-family: "pingfang sc";
 }
+html,
+body {
+  width: 100% !important;
+}
 .el-icon {
   cursor: pointer;
 }
