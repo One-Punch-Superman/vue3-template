@@ -1,7 +1,7 @@
 <template>
   <div class="layout-header" :style="{ color: textColor }">
     <div v-if="layout !== 'side'" class="header-logo" @click="toHome">
-      <SvgIcon name="resource" size="32" :color="textColor"></SvgIcon>
+      <SvgIcon name="resource" :size="32" :color="textColor"></SvgIcon>
       <span class="logo">后台管理系统</span>
     </div>
     <div v-else>

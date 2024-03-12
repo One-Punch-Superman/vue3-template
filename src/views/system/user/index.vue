@@ -31,11 +31,11 @@
       v-model:current-page="pageInfo.currentPage"
       v-model:page-size="pageInfo.pageSize"
       :total="pageInfo.total"
-      @getData="getList"
+      @get-data="getList"
     />
 
-    <el-dialog v-model="dialogVisible" :title="dialogTitle" @close="handleCancel" width="500px">
-      <el-form :model="formData" ref="formRef" :rules="formRules" label-width="70px">
+    <el-dialog v-model="dialogVisible" :title="dialogTitle" width="500px" @close="handleCancel">
+      <el-form ref="formRef" :model="formData" :rules="formRules" label-width="70px">
         <el-form-item label="用户名:" prop="username">
           <el-input v-model="formData.username" :readonly="dialogTitle == '编辑'" />
         </el-form-item>
@@ -66,7 +66,7 @@
 
 <script lang="ts" setup>
 import { ElMessageBox, ElMessage } from 'element-plus';
-import { getUserList, postUser, putUser, delUser } from '@/api/system';
+import { getUserList, addOrEditUser, delUser } from '@/api/system';
 
 const searchName = ref('');
 const dataList = ref<any>([]);
@@ -91,7 +91,7 @@ const formData = ref({
   status: 1
 });
 const checkEmail = (rule: any, value: any, callback: any) => {
-  var reg = /^[a-zA-Z0-9]+([-_.][a-zA-Z0-9]+)*@[a-zA-Z0-9]+([-_.][a-zA-Z0-9]+)*\.[a-z]{2,}$/;
+  const reg = /^[a-zA-Z0-9]+([-_.][a-zA-Z0-9]+)*@[a-zA-Z0-9]+([-_.][a-zA-Z0-9]+)*\.[a-z]{2,}$/;
   if (value && !reg.test(value)) {
     return callback(new Error('邮箱格式错误'));
   }
@@ -178,27 +178,15 @@ const handlecConfirm = () => {
   formRef.value.validate((valid: any) => {
     if (valid) {
       const params = formData.value;
-      if (params.id) {
-        putUser(params).then((res: any) => {
-          if (res.code == 200) {
-            dialogVisible.value = false;
-            getList();
-            ElMessage.success('编辑成功');
-          } else {
-            ElMessage.error(res.message);
-          }
-        });
-      } else {
-        postUser(params).then((res: any) => {
-          if (res.code == 200) {
-            dialogVisible.value = false;
-            getList();
-            ElMessage.success('新增成功');
-          } else {
-            ElMessage.error(res.message);
-          }
-        });
-      }
+      addOrEditUser(params).then((res: any) => {
+        if (res.code == 200) {
+          dialogVisible.value = false;
+          getList();
+          ElMessage.success('编辑成功');
+        } else {
+          ElMessage.error(res.message);
+        }
+      });
     }
   });
 };

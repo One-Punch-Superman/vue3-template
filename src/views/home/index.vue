@@ -4,14 +4,17 @@
       <el-form-item prop="username" label="用户名">
         <el-input v-model="searchData.username" placeholder="请输入用户名" clearable />
       </el-form-item>
-      <el-form-item prop="nickname" label="用户昵称">
-        <el-input v-model="searchData.nickname" placeholder="请输入用户昵称" clearable />
+      <el-form-item prop="department" label="部门">
+        <el-input v-model="searchData.department" placeholder="请输入部门" clearable />
       </el-form-item>
-      <el-form-item prop="describe" label="描述">
-        <el-input v-model="searchData.describe" placeholder="请输入描述" clearable />
+      <el-form-item prop="roles" label="角色">
+        <el-input v-model="searchData.roles" placeholder="请输入角色" clearable />
+      </el-form-item>
+      <el-form-item prop="status" label="状态">
+        <el-input v-model="searchData.status" placeholder="请输入状态" clearable />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="getList">搜索</el-button>
+        <el-button type="primary" @click="getList">查询</el-button>
         <el-button @click="handleReset">重置</el-button>
       </el-form-item>
     </el-form>
@@ -26,8 +29,14 @@
     <el-table :data="tableData" border show-overflow-tooltip @selection-change="selectionChange">
       <el-table-column type="selection" width="50" align="center" />
       <el-table-column label="用户名" prop="username" />
-      <el-table-column label="用户昵称" prop="nickname" />
-      <el-table-column label="描述" prop="describe" />
+      <el-table-column label="部门" prop="department" />
+      <el-table-column label="角色" prop="roles" />
+      <el-table-column label="状态" prop="status">
+        <template #default="{ row }">
+          <el-tag v-if="row.status">正常</el-tag>
+          <el-tag v-else type="danger">禁用</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" width="150">
         <template #default="{ row }">
           <el-button link type="primary" @click="handleEdit(row)">编辑</el-button>
@@ -47,11 +56,14 @@
         <el-form-item label="用户名" prop="username">
           <el-input v-model="formData.username" placeholder="请输入用户名" />
         </el-form-item>
-        <el-form-item label="用户昵称" prop="nickname">
-          <el-input v-model="formData.nickname" placeholder="请输入用户昵称" />
+        <el-form-item label="部门" prop="department">
+          <el-input v-model="formData.department" placeholder="请输入部门" />
         </el-form-item>
-        <el-form-item label="描述" prop="describe">
-          <el-input v-model="formData.describe" placeholder="请输入描述" />
+        <el-form-item label="角色" prop="roles">
+          <el-input v-model="formData.roles" placeholder="请输入角色" />
+        </el-form-item>
+        <el-form-item label="状态" prop="status">
+          <el-input v-model="formData.status" placeholder="请输入状态" />
         </el-form-item>
       </el-form>
       <template #footer>
@@ -76,27 +88,31 @@ import { getUserList, addOrEditUser, delUser } from '@/api/system';
 const searchFormRef = ref();
 const searchData = reactive({
   username: '',
-  nickname: '',
-  describe: ''
+  department: '',
+  roles: [],
+  status: ''
 });
 const tableData = ref([
   {
     id: 1,
     username: '孙悟空',
-    nickname: '齐天大圣',
-    describe: '齐天大圣'
+    department: '齐天大圣',
+    roles: [],
+    status: false
   },
   {
     id: 2,
     username: '猪八戒',
-    nickname: '天蓬元帅',
-    describe: '天蓬元帅'
+    department: '天蓬元帅',
+    roles: [],
+    status: true
   },
   {
     id: 3,
     username: '沙和尚',
-    nickname: '卷帘大将',
-    describe: '卷帘大将'
+    department: '卷帘大将',
+    roles: [],
+    status: true
   }
 ]);
 const selectIds = ref([]);
@@ -114,12 +130,12 @@ const dialog = reactive({
 });
 const formData = reactive<any>({
   username: '',
-  nickname: '',
-  describe: ''
+  department: '',
+  roles: [],
+  status: ''
 });
 const rules = reactive({
-  username: [{ required: true, message: '用户名不能为空', trigger: 'blur' }],
-  nickname: [{ required: true, message: '用户名不能为空', trigger: 'blur' }]
+  username: [{ required: true, message: '用户名不能为空', trigger: 'blur' }]
 });
 
 onMounted(() => {
@@ -130,8 +146,9 @@ onMounted(() => {
 function getList() {
   const params = {
     username: searchData.username,
-    nickname: searchData.nickname,
-    describe: searchData.describe,
+    department: searchData.department,
+    roles: searchData.roles,
+    status: searchData.status,
     pageNo: pageInfo.currentPage,
     pageSize: pageInfo.pageSize
   };
@@ -162,7 +179,7 @@ function handleAdd() {
 function handleEdit(row: any) {
   dialog.visible = true;
   dialog.type = 'edit';
-  dialog.title = '新增用户';
+  dialog.title = '编辑用户';
   nextTick(() => {
     Object.assign(formData, row);
   });
