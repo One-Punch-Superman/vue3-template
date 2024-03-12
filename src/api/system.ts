@@ -14,6 +14,6 @@ export function addOrEditUser(params: any) {
 }
 
 // 删除用户
-export function delUser(params: any) {
-  return del(`/user`, params);
+export function delUser(id: any) {
+  return del(`/user/${id}`);
 }
