@@ -38,17 +38,16 @@ const handleClickMenu = (item: any) => {
 
 <style lang="scss" scoped>
 .el-menu-item {
-  height: 48px;
-  margin: 4px 0;
-  line-height: 48px;
+  height: 50px;
+  line-height: 50px;
 }
 .el-sub-menu .el-menu-item {
-  height: 48px;
-  line-height: 48px;
+  height: 50px;
+  line-height: 50px;
 }
 :deep(.el-sub-menu__title) {
-  height: 48px;
-  line-height: 48px;
+  height: 50px;
+  line-height: 50px;
 }
 :deep(.el-sub-menu__title):hover {
   background-color: transparent;
