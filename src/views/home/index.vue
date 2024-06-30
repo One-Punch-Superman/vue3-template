@@ -14,7 +14,7 @@
         <el-input v-model="searchData.status" placeholder="请输入状态" clearable />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="getList">查询</el-button>
+        <el-button type="primary" @click="getData">查询</el-button>
         <el-button @click="handleReset">重置</el-button>
       </el-form-item>
     </el-form>
@@ -48,32 +48,10 @@
       v-model:current-page="pageInfo.currentPage"
       v-model:page-size="pageInfo.pageSize"
       :total="pageInfo.total"
-      @get-data="getList"
+      @get-data="getData"
     />
-
-    <el-dialog v-model="dialog.visible" :title="dialog.title" :close-on-click-modal="false" @closed="closeDialog">
-      <el-form ref="dialogFormRef" :model="formData" :rules="rules" label-width="80px">
-        <el-form-item label="用户名" prop="username">
-          <el-input v-model="formData.username" placeholder="请输入用户名" />
-        </el-form-item>
-        <el-form-item label="部门" prop="department">
-          <el-input v-model="formData.department" placeholder="请输入部门" />
-        </el-form-item>
-        <el-form-item label="角色" prop="roles">
-          <el-input v-model="formData.roles" placeholder="请输入角色" />
-        </el-form-item>
-        <el-form-item label="状态" prop="status">
-          <el-input v-model="formData.status" placeholder="请输入状态" />
-        </el-form-item>
-      </el-form>
-      <template #footer>
-        <div class="dialog-footer">
-          <el-button type="primary" @click="handleSubmit">确 定</el-button>
-          <el-button @click="dialog.visible = false">取 消</el-button>
-        </div>
-      </template>
-    </el-dialog>
   </div>
+  <Detail ref="detailRef" :title="title" @get-data="getData"></Detail>
 
   <!-- <SvgIcon name="resource"></SvgIcon> -->
   <!-- <div>Vue3视频插件 vue-video-player</div>
@@ -83,7 +61,8 @@
 
 <script lang="ts" setup>
 import { ElMessage, ElMessageBox } from 'element-plus';
-import { getUserList, addOrEditUser, delUser } from '@/api/system';
+import { getUserList, delUser } from '@/api/system';
+import Detail from './detail/index.vue';
 
 const searchFormRef = ref();
 const searchData = reactive({
@@ -92,6 +71,7 @@ const searchData = reactive({
   roles: [],
   status: ''
 });
+
 const tableData = ref([
   {
     id: 1,
@@ -122,28 +102,15 @@ const pageInfo = reactive({
   total: 0
 });
 
-const dialogFormRef = ref();
-const dialog = reactive({
-  visible: false,
-  type: '',
-  title: ''
-});
-const formData = reactive<any>({
-  username: '',
-  department: '',
-  roles: [],
-  status: ''
-});
-const rules = reactive({
-  username: [{ required: true, message: '用户名不能为空', trigger: 'blur' }]
-});
+const detailRef = ref();
+const title = ref('');
 
 onMounted(() => {
-  getList();
+  getData();
 });
 
 // 列表查询
-function getList() {
+function getData() {
   const params = {
     username: searchData.username,
     department: searchData.department,
@@ -165,48 +132,7 @@ function getList() {
 function handleReset() {
   searchFormRef.value.resetFields();
   pageInfo.currentPage = 1;
-  getList();
-}
-
-// 新增
-function handleAdd() {
-  dialog.visible = true;
-  dialog.type = 'add';
-  dialog.title = '新增用户';
-}
-
-// 编辑
-function handleEdit(row: any) {
-  dialog.visible = true;
-  dialog.type = 'edit';
-  dialog.title = '编辑用户';
-  nextTick(() => {
-    Object.assign(formData, row);
-  });
-}
-
-// 表单提交
-function handleSubmit() {
-  dialogFormRef.value.validate((valid: any) => {
-    if (valid) {
-      addOrEditUser(formData).then((res: any) => {
-        if (res.code === 200) {
-          ElMessage.success(`${dialog.title}成功`);
-          dialog.visible = false;
-          if (dialog.type === 'add') {
-            pageInfo.currentPage = 1;
-          }
-          getList();
-        }
-      });
-    }
-  });
-}
-
-// 弹窗关闭
-function closeDialog() {
-  formData.id = null;
-  dialogFormRef.value.resetFields();
+  getData();
 }
 
 // 行选中
@@ -232,10 +158,22 @@ function handleDel(id?: number) {
         if (tableData.value.length === 1 && pageInfo.currentPage > 1) {
           pageInfo.currentPage = pageInfo.currentPage - 1;
         }
-        getList();
+        getData();
       });
     })
     .catch(() => {});
+}
+
+// 新增
+function handleAdd() {
+  title.value = '新增用户';
+  detailRef.value.openDialog();
+}
+
+// 编辑
+function handleEdit(row: any) {
+  title.value = '编辑用户';
+  detailRef.value.openDialog();
 }
 </script>
 
