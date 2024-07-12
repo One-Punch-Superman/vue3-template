@@ -52,7 +52,6 @@
     />
   </div>
   <Detail ref="detailRef" :title="title" @get-data="getData"></Detail>
-
   <!-- <SvgIcon name="resource"></SvgIcon> -->
   <!-- <div>Vue3视频插件 vue-video-player</div>
   <div>Vue3md编辑器 v-md-editor</div>
@@ -62,7 +61,7 @@
 <script lang="ts" setup>
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { getUserList, delUser } from '@/api/system';
-import Detail from './detail/index.vue';
+import Detail from '@/views/home/detail/index.vue';
 
 const searchFormRef = ref();
 const searchData = reactive({

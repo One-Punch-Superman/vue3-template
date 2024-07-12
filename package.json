@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint --ext .ts,.tsx,.vue,.js,.jsx --fix",
+    "lint": "eslint --ext .ts,.tsx,.vue,.js,.jsx ./src --fix",
     "style": "stylelint src/**/*.{html,vue,sass,less} --fix",
     "prettier": "prettier --write src/"
   },
@@ -24,11 +24,12 @@
   },
   "devDependencies": {
     "@types/node": "^20.11.19",
-    "@typescript-eslint/eslint-plugin": "^5.62.0",
-    "@typescript-eslint/parser": "^5.62.0",
+    "@typescript-eslint/eslint-plugin": "^7.16.0",
+    "@typescript-eslint/parser": "^7.16.0",
     "@vitejs/plugin-vue": "^5.0.3",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^8.10.0",
+    "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-vue": "^9.21.1",
     "postcss": "^8.4.35",
