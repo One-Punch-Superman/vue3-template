@@ -21,10 +21,10 @@ module.exports = {
     parser: '@typescript-eslint/parser'
   },
   // eslint-plugin-vue @typescript-eslint/eslint-plugin eslint-plugin-prettier的缩写
-  plugins: ['vue', '@typescript-eslint', 'prettier', 'import'],
-  // 'off'   或 0 - 关闭规则
-  // 'warn'  或 1 - 开启规则，使用警告级别的错误(不会导致程序退出)
-  // 'error' 或 2 - 开启规则，使用错误级别的错误(当被触发的时候，程序会退出)
+  plugins: ['vue', '@typescript-eslint', 'prettier'],
+  // 'off'  或 0 - 关闭规则
+  // 'warn' 或 1 - 开启规则，使用警告级别的错误(不会导致程序退出)
+  // 'error'或 2 - 开启规则，使用错误级别的错误(当被触发的时候，程序会退出)
   rules: {
     '@typescript-eslint/ban-ts-ignore': 'off',
     '@typescript-eslint/no-unused-vars': 'off',
@@ -137,18 +137,7 @@ module.exports = {
     'no-fallthrough': 'warn',
     'no-extra-boolean-cast': 'warn',
     'no-case-declarations': 'warn',
-    'no-async-promise-executor': 'warn',
-    'import/order': [
-      'error',
-      {
-        groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
-        'newlines-between': 'never',
-        alphabetize: {
-          order: 'asc',
-          caseInsensitive: true
-        }
-      }
-    ]
+    'no-async-promise-executor': 'warn'
   },
   globals: {}
 };
