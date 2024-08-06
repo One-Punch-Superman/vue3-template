@@ -1,9 +1,9 @@
 <template>
-  <div ref="echartsRef" class="echart" :style="{ width, height }"></div>
+  <div ref="chartRef" :style="{ width, height }"></div>
 </template>
 
-<script lang="ts" setup>
-import { onMounted, ref, watch } from 'vue';
+<script setup>
+import { onMounted, onUnmounted, ref } from 'vue';
 import * as echarts from 'echarts';
 
 const props = defineProps({
@@ -21,26 +21,40 @@ const props = defineProps({
   }
 });
 
+const chartRef = ref(null);
+let myChart = null;
+
+const resizeObserverCallback = () => {
+  if (myChart) {
+    myChart.resize();
+  }
+};
+const resizeObserver = new ResizeObserver(resizeObserverCallback);
+
 watch(
   () => props.option,
   (newOption) => {
-    if (myChart.value) {
-      myChart.value.setOption(newOption);
+    if (myChart) {
+      myChart.setOption(newOption);
     }
   },
   { deep: true }
 );
 
-const echartsRef = ref();
-const myChart = ref();
-
 onMounted(() => {
-  myChart.value = echarts.init(echartsRef.value);
-  myChart.value.setOption(props.option);
-  window.addEventListener('resize', function () {
-    myChart.value.resize();
-  });
+  myChart = echarts.init(chartRef.value);
+  myChart.setOption(props.option);
+  if (chartRef.value) {
+    resizeObserver.observe(chartRef.value);
+  }
+});
+
+onUnmounted(() => {
+  if (chartRef.value) {
+    resizeObserver.unobserve(chartRef.value);
+  }
+  if (myChart) {
+    myChart.dispose();
+  }
 });
 </script>
-
-<style lang="scss" scoped></style>
