@@ -3,7 +3,7 @@
 </template>
 
 <script setup>
-import { onMounted, onUnmounted, ref } from 'vue';
+import { onMounted, onUnmounted, ref, nextTick } from 'vue';
 import * as echarts from 'echarts';
 
 const props = defineProps({
@@ -25,15 +25,19 @@ const chartRef = ref(null);
 let myChart = null;
 
 const resizeObserverCallback = () => {
-  if (myChart) {
-    myChart.resize();
-  }
+  nextTick(() => {
+    debugger;
+    if (myChart) {
+      myChart.resize();
+    }
+  });
 };
 const resizeObserver = new ResizeObserver(resizeObserverCallback);
 
 watch(
   () => props.option,
   (newOption) => {
+    debugger;
     if (myChart) {
       myChart.setOption(newOption);
     }
@@ -42,11 +46,14 @@ watch(
 );
 
 onMounted(() => {
-  myChart = echarts.init(chartRef.value);
-  myChart.setOption(props.option);
-  if (chartRef.value) {
-    resizeObserver.observe(chartRef.value);
-  }
+  nextTick(() => {
+    debugger;
+    myChart = echarts.init(chartRef.value);
+    myChart.setOption(props.option);
+    if (chartRef.value) {
+      resizeObserver.observe(chartRef.value);
+    }
+  });
 });
 
 onUnmounted(() => {
@@ -58,3 +65,5 @@ onUnmounted(() => {
   }
 });
 </script>
+
+<style lang="scss" scoped></style>
