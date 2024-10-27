@@ -50,31 +50,8 @@
       :total="pageInfo.total"
       @get-data="getList"
     />
-
-    <el-dialog v-model="dialog.visible" :title="dialog.title" :close-on-click-modal="false" @closed="closeDialog">
-      <el-form ref="dialogFormRef" :model="formData" :rules="rules" label-width="80px">
-        <el-form-item label="用户名" prop="username">
-          <el-input v-model="formData.username" placeholder="请输入用户名" />
-        </el-form-item>
-        <el-form-item label="部门" prop="department">
-          <el-input v-model="formData.department" placeholder="请输入部门" />
-        </el-form-item>
-        <el-form-item label="角色" prop="roles">
-          <el-input v-model="formData.roles" placeholder="请输入角色" />
-        </el-form-item>
-        <el-form-item label="状态" prop="status">
-          <el-input v-model="formData.status" placeholder="请输入状态" />
-        </el-form-item>
-      </el-form>
-      <template #footer>
-        <div class="dialog-footer">
-          <el-button type="primary" @click="handleSubmit">确 定</el-button>
-          <el-button @click="dialog.visible = false">取 消</el-button>
-        </div>
-      </template>
-    </el-dialog>
+    <Dialog ref="dialogRef" :title="title" :type="type" :data="data" @get-list="getList"></Dialog>
   </div>
-
   <!-- <SvgIcon name="resource"></SvgIcon> -->
   <!-- <div>Vue3视频插件 vue-video-player</div>
   <div>Vue3md编辑器 v-md-editor</div>
@@ -83,7 +60,9 @@
 
 <script lang="ts" setup>
 import { ElMessage, ElMessageBox } from 'element-plus';
-import { getUserList, addOrEditUser, delUser } from '@/api/system';
+import { getUserList, delUser } from '@/api/system';
+
+import Dialog from './Dialog.vue';
 
 const searchFormRef = ref();
 const searchData = reactive({
@@ -121,22 +100,7 @@ const pageInfo = reactive({
   pageSize: 20,
   total: 0
 });
-
-const dialogFormRef = ref();
-const dialog = reactive({
-  visible: false,
-  type: '',
-  title: ''
-});
-const formData = reactive<any>({
-  username: '',
-  department: '',
-  roles: [],
-  status: ''
-});
-const rules = reactive({
-  username: [{ required: true, message: '用户名不能为空', trigger: 'blur' }]
-});
+const dialogRef = ref();
 
 onMounted(() => {
   getList();
@@ -168,45 +132,22 @@ function handleReset() {
   getList();
 }
 
+const type = ref('');
+const title = ref('');
+const data = ref([]);
 // 新增
 function handleAdd() {
-  dialog.visible = true;
-  dialog.type = 'add';
-  dialog.title = '新增用户';
+  type.value = 'add';
+  title.value = '新增用户';
+  data.value = [{ a: 1 }, { n: 2 }];
+  dialogRef.value.openDialog();
 }
 
 // 编辑
 function handleEdit(row: any) {
-  dialog.visible = true;
-  dialog.type = 'edit';
-  dialog.title = '编辑用户';
-  nextTick(() => {
-    Object.assign(formData, row);
-  });
-}
-
-// 表单提交
-function handleSubmit() {
-  dialogFormRef.value.validate((valid: any) => {
-    if (valid) {
-      addOrEditUser(formData).then((res: any) => {
-        if (res.code === 200) {
-          ElMessage.success(`${dialog.title}成功`);
-          dialog.visible = false;
-          if (dialog.type === 'add') {
-            pageInfo.currentPage = 1;
-          }
-          getList();
-        }
-      });
-    }
-  });
-}
-
-// 弹窗关闭
-function closeDialog() {
-  formData.id = null;
-  dialogFormRef.value.resetFields();
+  type.value = 'edit';
+  title.value = '编辑用户';
+  dialogRef.value.openDialog();
 }
 
 // 行选中

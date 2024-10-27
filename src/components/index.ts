@@ -1,15 +1,17 @@
 import Pagination from './pagination/index.vue';
 import SvgIcon from './svgIcon/index.vue';
 
-const globalComponent: any = {
+const components: any = {
   Pagination,
   SvgIcon
 };
 
+export { Pagination, SvgIcon };
+
 export default {
   install(app: any) {
-    Object.keys(globalComponent).forEach((key) => {
-      app.component(key, globalComponent[key]);
+    Object.keys(components).forEach((key) => {
+      app.component(key, components[key]);
     });
   }
 };
