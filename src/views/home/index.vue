@@ -11,13 +11,14 @@ echarts.registerMap('china', chinaJson);
 
 const options = reactive({
   tooltip: {
-    triggerOn: 'mousemove', // mousemove、click
+    alwaysShowContent: true,
+    triggerOn: 'click', // mousemove
     padding: 8,
     borderWidth: 1,
     borderColor: '#409eff',
     backgroundColor: 'rgba(255,255,255,0.7)',
     textStyle: {
-      color: '#000000',
+      color: '#000',
       fontSize: 13
     }
   },
@@ -28,16 +29,18 @@ const options = reactive({
       max: 2
     },
     zoom: 1,
-    top: 120,
+    top: 0,
+    bottom: 0,
+    // left: 0,
+    // right: 0,
     label: {
-      normal: {
-        show: true,
-        fontSize: '14',
-        color: 'rgba(0,0,0,0.7)'
-      }
+      show: true,
+      fontSize: 12,
+      color: 'rgba(0,0,0,0.7)' // 地域文字颜色
     },
     itemStyle: {
       normal: {
+        areaColor: '#fff', // 地域颜色
         borderColor: 'rgba(0, 0, 0, 0.2)'
       },
       emphasis: {
@@ -86,6 +89,19 @@ onMounted(() => {
 function initEchartMap() {
   const myChart = echarts.init(document.getElementById('china_map'));
   myChart.setOption(options);
+
+  myChart.dispatchAction({
+    type: 'highlight',
+    seriesIndex: 0, // 系列索引，如果有多个系列的话
+    dataIndex: [1, 2, 3]
+    // geoName: ['重庆', '上海']
+  });
+  myChart.dispatchAction({
+    type: 'showTip',
+    seriesIndex: 0, // 系列索引，如果有多个系列的话
+    dataIndex: myChart.getOption().series[0].data.findIndex((item) => item.name === '重庆')
+    // geoName: ['重庆', '上海']
+  });
 
   window.addEventListener('resize', function () {
     myChart.resize();
