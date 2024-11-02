@@ -1,90 +1,124 @@
 <template>
-  <div>
-    <el-table :data="tableData" :span-method="objectSpanMethod" border style="width: 100%; margin-top: 20px">
-      <el-table-column prop="name" label="Name" />
-      <el-table-column prop="amount1" label="Amount 1" />
-      <el-table-column prop="amount2" label="Amount 2" />
-      <el-table-column prop="amount3" label="Amount 3" />
-    </el-table>
+  <div id="china_map_box">
+    <div id="china_map"></div>
   </div>
 </template>
 
-<script lang="ts" setup>
-interface User {
-  id: string;
-  name: string;
-  amount1: string;
-  amount2: string;
-  amount3: number;
-}
+<script setup>
+import * as echarts from 'echarts';
+import chinaJson from './china.json';
+echarts.registerMap('china', chinaJson);
 
-interface SpanMethodProps {
-  row: User;
-  column: TableColumnCtx<User>;
-  rowIndex: number;
-  columnIndex: number;
-}
-const tableData: User[] = [
+const options = reactive({
+  tooltip: {
+    triggerOn: 'mousemove', // mousemove、click
+    padding: 8,
+    borderWidth: 1,
+    borderColor: '#409eff',
+    backgroundColor: 'rgba(255,255,255,0.7)',
+    textStyle: {
+      color: '#000000',
+      fontSize: 13
+    }
+  },
+  geo: {
+    map: 'china',
+    scaleLimit: {
+      min: 1,
+      max: 2
+    },
+    zoom: 1,
+    top: 120,
+    label: {
+      normal: {
+        show: true,
+        fontSize: '14',
+        color: 'rgba(0,0,0,0.7)'
+      }
+    },
+    itemStyle: {
+      normal: {
+        borderColor: 'rgba(0, 0, 0, 0.2)'
+      },
+      emphasis: {
+        areaColor: '#f2d5ad',
+        shadowOffsetX: 0,
+        shadowOffsetY: 0,
+        borderWidth: 0
+      }
+    }
+  },
+  series: [
+    {
+      name: '突发事件',
+      type: 'map',
+      geoIndex: 0,
+      data: []
+    }
+  ]
+});
+const dataList = [
   {
-    id: '12987122',
-    name: 'Tom',
-    amount1: '234',
-    amount2: '3.2',
-    amount3: 10
+    name: '北京',
+    value: 540
   },
   {
-    id: '12987123',
-    name: 'Tom',
-    amount1: '234',
-    amount2: '4.43',
-    amount3: 10
+    name: '天津',
+    value: 130
   },
   {
-    id: '12987124',
-    name: 'Tom',
-    amount1: '234',
-    amount2: '1.9',
-    amount3: 9
+    name: '上海',
+    value: 400
   },
   {
-    id: '12987125',
-    name: 'Tom2',
-    amount1: '234',
-    amount2: '2.2',
-    amount3: 17
-  },
-  {
-    id: '12987126',
-    name: 'Tom2',
-    amount1: '234',
-    amount2: '4.1',
-    amount3: 15
+    name: '重庆',
+    value: 750
   }
 ];
 
-let str = '';
-const stroageValue: Record<string, string | number> = reactive({});
-const objectSpanMethod = ({ row, column, rowIndex, columnIndex }: SpanMethodProps) => {
-  debugger;
-  if (columnIndex === 0 || columnIndex === 1 || columnIndex === 2 || columnIndex === 3) {
-    let spanCount = 1;
-    for (let i = rowIndex + 1; i < tableData.length; i++) {
-      if (tableData[i][`${column.property}`] === row[`${column.property}`]) {
-        spanCount++;
-        str = row[`${column.property}`];
-      } else {
-        break;
-      }
-    }
-    if (spanCount === 1 && !stroageValue[`${str}`]) {
-      return [1, 1];
-    }
-    !stroageValue[`${str}`] && (stroageValue[`${str}`] = spanCount);
-    if (spanCount > (stroageValue[`${str}`] as number) - 1) {
-      return [spanCount, 1];
-    } else if (rowIndex > 0 && tableData[rowIndex - 1][`${column.property}`] === row[`${column.property}`]) {
-      return [0, 0];
-    }
-  }
-};
+onMounted(() => {
+  setEchartOption();
+  nextTick(() => {
+    initEchartMap();
+  });
+});
+
+function initEchartMap() {
+  const myChart = echarts.init(document.getElementById('china_map'));
+  myChart.setOption(options);
+
+  window.addEventListener('resize', function () {
+    myChart.resize();
+  });
+}
+// 修改echart配制
+function setEchartOption() {
+  options.series[0].data = dataList;
+}
 </script>
+
+<style>
+#china_map_box {
+  position: relative;
+  height: 100%;
+}
+#china_map_box #china_map {
+  height: 100%;
+}
+#china_map_box .china_map_logo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 45px;
+}
+#china_map .tooltip_style {
+  overflow: hidden;
+  line-height: 1.7;
+}
+#china_map .tooltip_left {
+  float: left;
+}
+#china_map .tooltip_right {
+  float: right;
+}
+</style>
