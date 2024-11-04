@@ -6,6 +6,7 @@
 
 <script setup>
 import * as echarts from 'echarts';
+import { autoPlay } from './autoPlay.ts';
 import chinaJson from './china.json';
 echarts.registerMap('china', chinaJson);
 
@@ -20,6 +21,10 @@ const options = reactive({
     textStyle: {
       color: '#000',
       fontSize: 13
+    },
+    position: function (point, params, dom, rect, size) {
+      // 固定在顶部
+      return [point[0], point[1]];
     }
   },
   geo: {
@@ -76,6 +81,10 @@ const dataList = [
   {
     name: '重庆',
     value: 750
+  },
+  {
+    name: '海南',
+    value: 750
   }
 ];
 
@@ -90,18 +99,20 @@ function initEchartMap() {
   const myChart = echarts.init(document.getElementById('china_map'));
   myChart.setOption(options);
 
-  myChart.dispatchAction({
-    type: 'highlight',
-    seriesIndex: 0, // 系列索引，如果有多个系列的话
-    dataIndex: [1, 2, 3]
-    // geoName: ['重庆', '上海']
-  });
-  myChart.dispatchAction({
-    type: 'showTip',
-    seriesIndex: 0, // 系列索引，如果有多个系列的话
-    dataIndex: myChart.getOption().series[0].data.findIndex((item) => item.name === '重庆')
-    // geoName: ['重庆', '上海']
-  });
+  autoPlay(myChart, options.series[0].data.length, 3000);
+  // for (let i = 0; i < dataList.length; i++) {
+  //   myChart.dispatchAction({
+  //     type: 'showTip',
+  //     seriesIndex: 0, // 系列索引，根据实际情况调整
+  //     dataIndex: i // 当前数据索引
+  //   });
+  //   // 可以添加延时，以便观察每个提示框的显示效果
+  //   setTimeout(function () {
+  //     myChart.dispatchAction({
+  //       type: 'hideTip'
+  //     });
+  //   }, 1000);
+  // }
 
   window.addEventListener('resize', function () {
     myChart.resize();
