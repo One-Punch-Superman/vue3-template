@@ -4,7 +4,7 @@
     :title="type === 'add' ? '新增' : '编辑'"
     :close-on-click-modal="false"
     width="560px"
-    @closed="closeDialog"
+    :before-close="closeDialog"
   >
     <el-form ref="formRef" :model="formData" :rules="rules" label-width="80px">
       <el-form-item label="用户名" prop="username">
@@ -64,6 +64,7 @@ const rules = reactive({
 });
 
 watch(dialogVisible, (value) => {
+  debugger;
   if (value && props.type === 'edit') {
     Object.assign(formData, props.row);
   }
@@ -85,8 +86,9 @@ function handleSubmit() {
 }
 
 // 弹窗关闭
-function closeDialog() {
+function closeDialog(done: () => void) {
   formRef.value.resetFields();
+  done();
 }
 
 function openDialog() {
