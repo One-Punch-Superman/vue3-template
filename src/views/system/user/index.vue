@@ -50,7 +50,7 @@
       :total="pageInfo.total"
       @get-data="getList"
     />
-    <Dialog ref="dialogRef" :title="title" :type="type" :data="data" @get-list="getList"></Dialog>
+    <Dialog ref="dialogRef" :type="modelData.type" :row="modelData.row" @get-list="getList"></Dialog>
   </div>
   <!-- <SvgIcon name="resource"></SvgIcon> -->
   <!-- <div>Vue3视频插件 vue-video-player</div>
@@ -132,21 +132,20 @@ function handleReset() {
   getList();
 }
 
-const type = ref('');
-const title = ref('');
-const data = ref([]);
+const modelData = reactive({
+  type: '',
+  row: {}
+});
 // 新增
 function handleAdd() {
-  type.value = 'add';
-  title.value = '新增用户';
-  data.value = [{ a: 1 }, { n: 2 }];
+  modelData.type = 'add';
+  modelData.row = {};
   dialogRef.value.openDialog();
 }
-
 // 编辑
 function handleEdit(row: any) {
-  type.value = 'edit';
-  title.value = '编辑用户';
+  modelData.type = 'edit';
+  modelData.row = row;
   dialogRef.value.openDialog();
 }
 

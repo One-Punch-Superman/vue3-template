@@ -1,6 +1,12 @@
 <template>
-  <el-dialog v-model="visible" :title="title" :close-on-click-modal="false" @closed="closeDialog">
-    <el-form ref="dialogFormRef" :model="formData" :rules="rules" label-width="80px">
+  <el-dialog
+    v-model="dialogVisible"
+    :title="type === 'add' ? '新增' : '编辑'"
+    :close-on-click-modal="false"
+    width="560px"
+    @closed="closeDialog"
+  >
+    <el-form ref="formRef" :model="formData" :rules="rules" label-width="80px">
       <el-form-item label="用户名" prop="username">
         <el-input v-model="formData.username" placeholder="请输入用户名" />
       </el-form-item>
@@ -17,7 +23,7 @@
     <template #footer>
       <div class="dialog-footer">
         <el-button type="primary" @click="handleSubmit">确 定</el-button>
-        <el-button @click="visible = false">取 消</el-button>
+        <el-button @click="dialogVisible = false">取 消</el-button>
       </div>
     </template>
   </el-dialog>
@@ -33,26 +39,21 @@ import { ElMessage } from 'element-plus';
 import { addOrEditUser } from '@/api/system';
 
 const props = defineProps({
-  title: {
-    type: String,
-    default: ''
-  },
   type: {
     type: String,
     default: ''
   },
-  data: {
-    type: Array,
-    default: []
+  row: {
+    type: Object,
+    default: () => ({})
   }
 });
-
 const emit = defineEmits(['getList']);
 
-const dialogFormRef = ref();
-const visible = ref(false);
+const formRef = ref();
+const dialogVisible = ref(false);
 
-const formData = reactive<any>({
+const formData = reactive({
   username: '',
   department: '',
   roles: [],
@@ -62,23 +63,20 @@ const rules = reactive({
   username: [{ required: true, message: '用户名不能为空', trigger: 'blur' }]
 });
 
-watch(
-  visible,
-  () => {
-    debugger;
-    console.log(props);
-  },
-  { deep: true }
-);
+watch(dialogVisible, (value) => {
+  if (value && props.type === 'edit') {
+    Object.assign(formData, props.row);
+  }
+});
 
-// 表单提交
+// 提交
 function handleSubmit() {
-  dialogFormRef.value.validate((valid: any) => {
+  formRef.value.validate((valid: any) => {
     if (valid) {
       addOrEditUser(formData).then((res: any) => {
         if (res.code === 200) {
-          ElMessage.success(`${props.title}成功`);
-          visible.value = false;
+          ElMessage.success(`${props.type === 'add' ? '新增' : '编辑'}成功`);
+          dialogVisible.value = false;
           emit('getList');
         }
       });
@@ -88,12 +86,11 @@ function handleSubmit() {
 
 // 弹窗关闭
 function closeDialog() {
-  formData.id = null;
-  dialogFormRef.value.resetFields();
+  formRef.value.resetFields();
 }
 
 function openDialog() {
-  visible.value = true;
+  dialogVisible.value = true;
 }
 
 defineExpose({
