@@ -27,11 +27,6 @@
       </div>
     </template>
   </el-dialog>
-
-  <!-- <SvgIcon name="resource"></SvgIcon> -->
-  <!-- <div>Vue3视频插件 vue-video-player</div>
-  <div>Vue3md编辑器 v-md-editor</div>
-  <div>Vue3富文本编辑器 wangeditor</div> -->
 </template>
 
 <script lang="ts" setup>
@@ -63,13 +58,6 @@ const rules = reactive({
   username: [{ required: true, message: '用户名不能为空', trigger: 'blur' }]
 });
 
-watch(dialogVisible, (value) => {
-  debugger;
-  if (value && props.type === 'edit') {
-    Object.assign(formData, props.row);
-  }
-});
-
 // 提交
 function handleSubmit() {
   formRef.value.validate((valid: any) => {
@@ -93,6 +81,11 @@ function closeDialog(done: () => void) {
 
 function openDialog() {
   dialogVisible.value = true;
+  nextTick(() => {
+    if (props.type === 'edit') {
+      Object.assign(formData, props.row);
+    }
+  });
 }
 
 defineExpose({

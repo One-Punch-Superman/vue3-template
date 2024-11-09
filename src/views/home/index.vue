@@ -2,6 +2,10 @@
   <div id="china_map_box">
     <div id="china_map"></div>
   </div>
+  <!-- <SvgIcon name="resource"></SvgIcon> -->
+  <!-- <div>Vue3视频插件 vue-video-player</div>
+  <div>Vue3md编辑器 v-md-editor</div>
+  <div>Vue3富文本编辑器 wangeditor</div> -->
 </template>
 
 <script setup>
