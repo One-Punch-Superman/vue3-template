@@ -2,9 +2,8 @@
   <el-dialog
     v-model="dialogVisible"
     :title="type === 'add' ? '新增' : '编辑'"
-    :close-on-click-modal="false"
     width="560px"
-    :before-close="closeDialog"
+    :close-on-click-modal="false"
   >
     <el-form ref="formRef" :model="formData" :rules="rules" label-width="80px">
       <el-form-item label="用户名" prop="username">
@@ -22,8 +21,8 @@
     </el-form>
     <template #footer>
       <div class="dialog-footer">
-        <el-button type="primary" @click="handleSubmit">确 定</el-button>
-        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button @click="dialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="handleSubmit">确认</el-button>
       </div>
     </template>
   </el-dialog>
@@ -73,14 +72,9 @@ function handleSubmit() {
   });
 }
 
-// 弹窗关闭
-function closeDialog(done: () => void) {
-  formRef.value.resetFields();
-  done();
-}
-
 function openDialog() {
   dialogVisible.value = true;
+  formRef.value.resetFields();
   nextTick(() => {
     if (props.type === 'edit') {
       Object.assign(formData, props.row);

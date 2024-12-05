@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import AutoImport from 'unplugin-auto-import/vite';
+import legacy from '@vitejs/plugin-legacy';
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
 import path from 'path';
 
@@ -12,8 +13,12 @@ const PROXY = {
 };
 
 export default defineConfig({
+  base: './',
   plugins: [
     vue(),
+    legacy({
+      additionalModernPolyfills: ['regenerator-runtime/runtime']
+    }),
     AutoImport({
       imports: ['vue', 'vue-router', 'pinia'],
       eslintrc: {
@@ -34,6 +39,13 @@ export default defineConfig({
   },
   build: {
     // sourcemap: true
+    rollupOptions: {
+      output: {
+        entryFileNames: `assets/[name].[hash].js`, // 为入口文件添加哈希
+        chunkFileNames: `assets/[name].[hash].js`, // 为分块添加哈希
+        assetFileNames: `assets/[name].[hash].[ext]` // 为静态资源添加哈希
+      }
+    }
   },
   css: {
     preprocessorOptions: {

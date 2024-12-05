@@ -162,7 +162,7 @@ function handleDel(id?: number) {
     return;
   }
   ElMessageBox.confirm('确认删除用户?', '提示', {
-    confirmButtonText: '确定',
+    confirmButtonText: '确认',
     cancelButtonText: '取消',
     type: 'warning'
   })

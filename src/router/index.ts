@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import { createRouter, createWebHistory, createWebHashHistory, RouteRecordRaw } from 'vue-router';
 import { getUserStore } from '@/store';
 import Layout from '@/layout/index.vue';
 
@@ -38,7 +38,7 @@ export const allRoutes: Array<RouteRecordRaw> = [
 const whiteList = ['/login'];
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes: allRoutes,
   scrollBehavior() {
     return {
