@@ -26,3 +26,8 @@ app.use(ElementPlus);
 app.use(globalComponent);
 
 app.mount('#app');
+
+app.onUnmount(() => {
+  debugger;
+  console.log('3333333333333');
+});

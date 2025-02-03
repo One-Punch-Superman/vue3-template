@@ -9,6 +9,6 @@
 <style lang="scss" scoped>
 .layout-main {
   flex: 1;
-  min-width: 1320px;
+  min-width: 1200px;
 }
 </style>
