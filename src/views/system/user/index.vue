@@ -8,8 +8,8 @@
     </div>
 
     <PageTable v-bind="tableInfo" @get-list="getList" @selection-change="selectionChange">
-      <template #department="row">11{{ row.department }}</template>
-      <template #operation="row">
+      <template #department="{ row }">11{{ row.department }}</template>
+      <template #operation="{ row }">
         <el-button link type="primary" @click="handleEdit(row)">编辑</el-button>
         <el-button link type="primary" @click="handleDel(row.id)">删除</el-button>
       </template>
@@ -83,8 +83,11 @@ onMounted(() => {
 });
 
 // 列表查询
-function getList() {
+function getList(isReset = false) {
   const { page } = tableInfo;
+  if (isReset) {
+    page.currentPage = 1;
+  }
   const params = {
     ...formData,
     pageNo: page.currentPage,
@@ -92,60 +95,21 @@ function getList() {
   };
   tableInfo.data = [
     {
+      id: 1,
       username: '孙悟空',
       department: '齐天大圣',
       roles: [],
       status: false
     },
     {
+      id: 2,
       username: '猪八戒',
       department: '天蓬元帅',
       roles: [],
       status: true
     },
     {
-      username: '沙和尚',
-      department: '卷帘大将',
-      roles: [],
-      status: true
-    },
-    {
-      username: '孙悟空',
-      department: '齐天大圣',
-      roles: [],
-      status: false
-    },
-    {
-      username: '猪八戒',
-      department: '天蓬元帅',
-      roles: [],
-      status: true
-    },
-    {
-      username: '沙和尚',
-      department: '卷帘大将',
-      roles: [],
-      status: true
-    },
-    {
-      username: '孙悟空',
-      department: '齐天大圣',
-      roles: [],
-      status: false
-    },
-    {
-      username: '猪八戒',
-      department: '天蓬元帅',
-      roles: [],
-      status: true
-    },
-    {
-      username: '沙和尚',
-      department: '卷帘大将',
-      roles: [],
-      status: true
-    },
-    {
+      id: 3,
       username: '沙和尚',
       department: '卷帘大将',
       roles: [],

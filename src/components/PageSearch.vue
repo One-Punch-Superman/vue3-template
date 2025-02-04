@@ -1,5 +1,5 @@
 <template>
-  <el-form ref="formRef" :model="formData" :inline="true" :label-width="labelWidth">
+  <el-form ref="formRef" :model="formData" :label-width="labelWidth" v-bind="$attrs">
     <el-row :gutter="20">
       <template v-for="item in formItems" :key="item.prop">
         <el-col :span="6" :md="6" :lg="5" :xl="4" class="el-col-max-3">
@@ -24,7 +24,7 @@
         </el-col>
       </template>
       <el-col :span="6" :md="6" :lg="5" :xl="4" class="el-col-max-3">
-        <el-form-item label=" ">
+        <el-form-item label="">
           <el-button type="primary" @click="handleSearch">查询</el-button>
           <el-button @click="handleReset">重置</el-button>
         </el-form-item>
@@ -57,7 +57,7 @@ const props = defineProps({
 const formData = defineModel({
   type: Object
 });
-const emit = defineEmits(['getList', 'reset']);
+const emit = defineEmits(['getList']);
 
 const formRef = ref();
 
@@ -82,7 +82,7 @@ function handleSearch() {
 // 重置
 function handleReset() {
   formRef.value.resetFields();
-  emit('reset');
+  emit('getList', true);
 }
 </script>
 

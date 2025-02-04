@@ -2,8 +2,8 @@
   <el-table :data="data" border v-bind="$attrs">
     <template v-for="item in columns" :key="item.prop">
       <el-table-column align="center" v-bind="item">
-        <template v-if="item.custom" #default="{ row }">
-          <slot :name="item.prop" v-bind="row"></slot>
+        <template v-if="item.custom" #default="scope">
+          <slot :name="item.prop" v-bind="scope"></slot>
         </template>
       </el-table-column>
     </template>
