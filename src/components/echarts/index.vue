@@ -26,7 +26,6 @@ let myChart = null;
 
 const resizeObserverCallback = () => {
   nextTick(() => {
-    debugger;
     if (myChart) {
       myChart.resize();
     }
@@ -37,7 +36,6 @@ const resizeObserver = new ResizeObserver(resizeObserverCallback);
 watch(
   () => props.option,
   (newOption) => {
-    debugger;
     if (myChart) {
       myChart.setOption(newOption);
     }
@@ -47,7 +45,6 @@ watch(
 
 onMounted(() => {
   nextTick(() => {
-    debugger;
     myChart = echarts.init(chartRef.value);
     myChart.setOption(props.option);
     if (chartRef.value) {

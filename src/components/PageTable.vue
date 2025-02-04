@@ -12,7 +12,7 @@
     v-model:current-page="pageInfo.currentPage"
     v-model:page-size="pageInfo.pageSize"
     :total="pageInfo.total"
-    @get-data="emit('getList')"
+    @get-list="emit('getList')"
   />
 </template>
 

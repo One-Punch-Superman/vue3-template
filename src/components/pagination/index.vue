@@ -31,7 +31,7 @@ const props = defineProps({
   }
 });
 
-const emit = defineEmits(['update:currentPage', 'update:pageSize', 'getData']);
+const emit = defineEmits(['update:currentPage', 'update:pageSize', 'getList']);
 
 const currentPage = computed({
   get() {
@@ -39,7 +39,7 @@ const currentPage = computed({
   },
   set(val) {
     emit('update:currentPage', val);
-    emit('getData');
+    emit('getList');
   }
 });
 
@@ -50,7 +50,7 @@ const pageSize = computed({
   set(val) {
     emit('update:currentPage', 1);
     emit('update:pageSize', val);
-    emit('getData');
+    emit('getList');
   }
 });
 </script>
