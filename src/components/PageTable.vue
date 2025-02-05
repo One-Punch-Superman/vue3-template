@@ -1,9 +1,9 @@
 <template>
-  <el-table :data="data" border v-bind="$attrs">
-    <template v-for="item in columns" :key="item.prop">
-      <el-table-column align="center" v-bind="item">
-        <template v-if="item.custom" #default="scope">
-          <slot :name="item.prop" v-bind="scope"></slot>
+  <el-table v-loading="loading" :data="data" border v-bind="$attrs">
+    <template v-for="(item, index) in columns" :key="index">
+      <el-table-column align="center" show-overflow-tooltip v-bind="item">
+        <template v-for="slot in Object.keys($slots)" :key="slot" #[slot]="scope">
+          <slot :name="slot" v-bind="scope"></slot>
         </template>
       </el-table-column>
     </template>
@@ -21,7 +21,6 @@ interface ITableColumns {
   type?: string;
   prop?: string;
   label?: string;
-  custom?: boolean;
   [key: string]: any;
 }
 
@@ -34,6 +33,10 @@ const props = defineProps({
     type: Array<ITableColumns>,
     default: () => []
   },
+  loading: {
+    type: Boolean,
+    default: false
+  },
   page: {
     type: Object,
     default: () => ({
@@ -45,7 +48,16 @@ const props = defineProps({
 });
 const emit = defineEmits(['getList']);
 
+const showColumns = computed(() => props.columns.filter((i) => i.show !== false));
+
 const pageInfo = reactive(props.page);
+
+function defaultFormatter(row: any, column: any, cellValue: any) {
+  if (cellValue === '' || cellValue === null || cellValue === undefined) {
+    return '--';
+  }
+  return cellValue;
+}
 </script>
 
 <style lang="scss"></style>

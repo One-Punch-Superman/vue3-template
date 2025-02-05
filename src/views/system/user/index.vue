@@ -8,7 +8,7 @@
     </div>
 
     <PageTable v-bind="tableInfo" @get-list="getList" @selection-change="selectionChange">
-      <template #department="{ row }">11{{ row.department }}</template>
+      <template #department="{ row }">1122111{{ row.department }}</template>
       <template #operation="{ row }">
         <el-button link type="primary" @click="handleEdit(row)">编辑</el-button>
         <el-button link type="primary" @click="handleDel(row.id)">删除</el-button>
@@ -54,14 +54,15 @@ function getInitData(data: any) {
 const formData = reactive(getInitData(formItems));
 
 const tableInfo = reactive({
+  loading: false,
   data: [],
   columns: [
-    { type: 'selection', align: 'center', width: '50px' },
+    { type: 'selection', width: '50px' },
     { prop: 'username', label: '用户名' },
-    { prop: 'department', label: '部门', custom: true },
+    { prop: 'department', label: '部门' },
     { prop: 'roles', label: '角色' },
     { prop: 'status', label: '状态' },
-    { prop: 'operation', label: '操作', width: '150px', custom: true }
+    { prop: 'operation', label: '操作', width: '150px' }
   ],
   page: {
     currentPage: 1,
