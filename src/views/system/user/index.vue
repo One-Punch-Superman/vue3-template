@@ -8,7 +8,8 @@
     </div>
 
     <PageTable v-bind="tableInfo" @get-list="getList" @selection-change="selectionChange">
-      <template #department="{ row }">1122111{{ row.department }}</template>
+      <template #department="{ row }">{{ row.department }}</template>
+      <template #roles="{ row }">{{ row.roles }}</template>
       <template #operation="{ row }">
         <el-button link type="primary" @click="handleEdit(row)">编辑</el-button>
         <el-button link type="primary" @click="handleDel(row.id)">删除</el-button>
@@ -61,7 +62,7 @@ const tableInfo = reactive({
     { prop: 'username', label: '用户名' },
     { prop: 'department', label: '部门' },
     { prop: 'roles', label: '角色' },
-    { prop: 'status', label: '状态' },
+    { prop: 'status', label: '状态', show: false },
     { prop: 'operation', label: '操作', width: '150px' }
   ],
   page: {

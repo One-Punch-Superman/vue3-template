@@ -1,9 +1,9 @@
 <template>
   <el-table v-loading="loading" :data="data" border v-bind="$attrs">
-    <template v-for="(item, index) in columns" :key="index">
-      <el-table-column align="center" show-overflow-tooltip v-bind="item">
-        <template v-for="slot in Object.keys($slots)" :key="slot" #[slot]="scope">
-          <slot :name="slot" v-bind="scope"></slot>
+    <template v-for="(item, index) in showColumns" :key="index">
+      <el-table-column align="center" :formatter="defaultFormatter" show-overflow-tooltip v-bind="item">
+        <template v-if="Object.keys($slots).includes(item.prop)" #default="scope">
+          <slot :name="item.prop" v-bind="scope"></slot>
         </template>
       </el-table-column>
     </template>
