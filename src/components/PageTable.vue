@@ -7,6 +7,9 @@
         </template>
       </el-table-column>
     </template>
+    <template #empty>
+      <slot name="empty"></slot>
+    </template>
   </el-table>
   <Pagination
     v-model:current-page="pageInfo.currentPage"

@@ -14,6 +14,11 @@
         <el-button link type="primary" @click="handleEdit(row)">编辑</el-button>
         <el-button link type="primary" @click="handleDel(row.id)">删除</el-button>
       </template>
+      <template #empty>
+        <div style="padding: 20px; color: #999; text-align: center">
+          <p>没有数据可显示</p>
+        </div>
+      </template>
     </PageTable>
 
     <Modal ref="dialogRef" :type="modelData.type" :row="modelData.row" @get-list="getList"></Modal>
@@ -95,29 +100,29 @@ function getList(isReset = false) {
     pageNo: page.currentPage,
     pageSize: page.pageSize
   };
-  tableInfo.data = [
-    {
-      id: 1,
-      username: '孙悟空',
-      department: '齐天大圣',
-      roles: [],
-      status: false
-    },
-    {
-      id: 2,
-      username: '猪八戒',
-      department: '天蓬元帅',
-      roles: [],
-      status: true
-    },
-    {
-      id: 3,
-      username: '沙和尚',
-      department: '卷帘大将',
-      roles: [],
-      status: true
-    }
-  ];
+  // tableInfo.data = [
+  //   {
+  //     id: 1,
+  //     username: '孙悟空',
+  //     department: '齐天大圣',
+  //     roles: [],
+  //     status: false
+  //   },
+  //   {
+  //     id: 2,
+  //     username: '猪八戒',
+  //     department: '天蓬元帅',
+  //     roles: [],
+  //     status: true
+  //   },
+  //   {
+  //     id: 3,
+  //     username: '沙和尚',
+  //     department: '卷帘大将',
+  //     roles: [],
+  //     status: true
+  //   }
+  // ];
   tableInfo.page.total = 30;
   getUserList(params).then((res: any) => {
     if (res.code === 200) {
