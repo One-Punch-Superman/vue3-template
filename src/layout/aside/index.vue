@@ -16,8 +16,12 @@
   </el-menu>
 
   <div v-if="layout === 'mix'" class="mix-collapse">
-    <el-icon v-if="isSidebarCompact" :size="20" :color="textColor" @click="changeCollapsed"><Expand /></el-icon>
-    <el-icon v-else :size="20" :color="textColor" @click="changeCollapsed"><Fold /></el-icon>
+    <el-icon v-if="isSidebarCompact" :size="20" :color="textColor" @click="changeCollapsed">
+      <Expand />
+    </el-icon>
+    <el-icon v-else :size="20" :color="textColor" @click="changeCollapsed">
+      <Fold />
+    </el-icon>
   </div>
 </template>
 
@@ -65,6 +69,9 @@ const toHome = () => {
     overflow: hidden;
     font-size: 22px;
     font-weight: bold;
+    line-height: 32px;
+    white-space: nowrap;
+    transition: width 0.3s ease;
   }
 }
 .el-menu {

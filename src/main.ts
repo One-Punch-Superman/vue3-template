@@ -10,7 +10,7 @@ import 'virtual:svg-icons-register';
 
 import globalComponent from '@/components';
 
-import '@/style/index.scss';
+import '@/styles/index.scss';
 
 const app = createApp(App);
 
@@ -26,8 +26,3 @@ app.use(ElementPlus);
 app.use(globalComponent);
 
 app.mount('#app');
-
-app.onUnmount(() => {
-  debugger;
-  console.log('3333333333333');
-});

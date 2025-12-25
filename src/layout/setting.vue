@@ -13,11 +13,11 @@
       </div>
       <div class="setting-hander">
         <span class="setting-label">hander背景色</span>
-        <el-color-picker v-model="headerBackground" :predefine="headerBackgroundColors" />
+        <el-color-picker v-model="headerBackground" :predefine="headerBackgroundColors" @change="clearHeader" />
       </div>
       <div class="setting-sidebar">
         <span class="setting-label">sidebar背景色</span>
-        <el-color-picker v-model="asideBackground" :predefine="asideBackgroundColors" />
+        <el-color-picker v-model="asideBackground" :predefine="asideBackgroundColors" @change="clearSidebar" />
       </div>
       <div class="setting-footer">
         <span class="setting-label">footer显示</span>
@@ -45,6 +45,17 @@ const getImageUrl = (name: string) => {
 
 const resetSetting = () => {
   settingStore.resetConfig();
+};
+
+const clearHeader = (value: string | null) => {
+  if (!value) {
+    headerBackground.value = '#fff';
+  }
+};
+const clearSidebar = (value: string | null) => {
+  if (!value) {
+    asideBackground.value = '#fff';
+  }
 };
 </script>
 

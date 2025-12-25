@@ -5,7 +5,6 @@ module.exports = {
     node: true,
     es2021: true
   },
-  parser: 'vue-eslint-parser',
   extends: [
     'eslint:recommended',
     'plugin:vue/vue3-recommended',
@@ -15,10 +14,11 @@ module.exports = {
     'prettier',
     './.eslintrc-auto-import.json'
   ],
+  parser: 'vue-eslint-parser',
   parserOptions: {
     ecmaVersion: 'latest',
-    sourceType: 'module',
-    parser: '@typescript-eslint/parser'
+    parser: '@typescript-eslint/parser',
+    sourceType: 'module'
   },
   // eslint-plugin-vue @typescript-eslint/eslint-plugin eslint-plugin-prettier的缩写
   plugins: ['vue', '@typescript-eslint', 'prettier'],

@@ -20,6 +20,8 @@
 </template>
 
 <script lang="ts" setup>
+import { getUserList } from '@/api/system';
+
 const dataList = [
   {
     roleName: '管理员',
@@ -38,7 +40,14 @@ const dataList = [
   }
 ];
 // 新增
-const handleAdd = () => {};
+const handleAdd = () => {
+  const params = {};
+  getUserList(params).then((res: any) => {
+    if (res.code === 200) {
+      const data = res.data;
+    }
+  });
+};
 // 编辑
 const handleEdit = () => {};
 // 删除
