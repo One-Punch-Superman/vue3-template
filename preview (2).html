@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DELTA-7 战术指挥后台系统</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        delta: {
+          bg: '#0f1214',
+          dark: '#1a1e21',
+          camo: '#272b2e',
+          scope: '#00e8c8',
+          warn: '#ff2a2a',
+          ammo: '#ffb020',
+          text: '#d1d6d9'
+        }
+      },
+      fontFamily: {
+        military: ['Orbitron', 'Consolas', 'monospace']
+      }
+    }
+  }
+}
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap');
+*{
+  scrollbar-width: thin;
+  scrollbar-color: #00e8c8 #0f1214;
+}
+*::-webkit-scrollbar{width:5px;height:5px}
+*::-webkit-scrollbar-thumb{background:#00e8c8}
+body{
+  background-color:#0f1214;
+  background-image:
+    linear-gradient(rgba(0,232,200,0.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,232,200,0.04) 1px,transparent 1px);
+  background-size:40px 40px;
+  font-family:military;
+}
+/* 战术面板 */
+.tactical-panel{
+  background:#1a1e21;
+  border:1px solid rgba(0,232,200,0.25);
+  box-shadow:0 0 10px rgba(0,232,200,0.1),inset 0 0 30px rgba(0,0,0,0.4);
+  position:relative;
+  overflow:hidden;
+}
+/* 夜视荧光文字 */
+.text-scope{
+  color:#00e8c8;
+  text-shadow:0 0 8px #00e8c8,0 0 16px #00e8c840;
+}
+/* 侧边菜单 */
+.menu-item{
+  border-left:3px solid transparent;
+  transition:0.2s all;
+}
+.menu-item:hover,.menu-item.active{
+  background:rgba(0,232,200,0.08);
+  border-left:3px solid #00e8c8;
+  color:#00e8c8;
+}
+/* 科技感主按钮 */
+.btn-delta{
+  position:relative;
+  overflow:hidden;
+  min-width:90px;
+  background:linear-gradient(135deg,rgba(0,140,123,0.95),rgba(0,232,200,0.95));
+  color:#0f1214;
+  border:1px solid rgba(0,232,200,0.8);
+  box-shadow:
+    0 0 8px rgba(0,232,200,0.5),
+    inset 0 0 12px rgba(255,255,255,0.15);
+  transition:0.22s ease;
+}
+.btn-delta:hover{
+  transform:translateY(-1px);
+  box-shadow:
+    0 0 14px rgba(0,232,200,0.7),
+    0 0 22px rgba(0,232,200,0.35),
+    inset 0 0 12px rgba(255,255,255,0.25);
+}
+.btn-delta:active{
+  transform:translateY(1px);
+  box-shadow:
+    0 0 6px rgba(0,232,200,0.6),
+    inset 0 0 18px rgba(0,0,0,0.35);
+}
+/* 科技感描边按钮 */
+.btn-delta-outline{
+  position:relative;
+  overflow:hidden;
+  min-width:90px;
+  background:transparent;
+  color:#00e8c8;
+  border:1px solid rgba(0,232,200,0.65);
+  box-shadow:
+    0 0 8px rgba(0,232,200,0.25),
+    inset 0 0 12px rgba(0,232,200,0.08);
+  transition:0.22s ease;
+}
+.btn-delta-outline:hover{
+  color:#fff;
+  border-color:#00e8c8;
+  background:rgba(0,232,200,0.12);
+  box-shadow:
+    0 0 14px rgba(0,232,200,0.45),
+    inset 0 0 18px rgba(0,232,200,0.18);
+}
+.btn-delta-outline:active{
+  transform:translateY(1px);
+  box-shadow:
+    0 0 6px rgba(0,232,200,0.35),
+    inset 0 0 24px rgba(0,0,0,0.4);
+}
+/* 分页按钮科技感 */
+.page-btn{
+  width:32px;
+  height:32px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid rgba(0,232,200,0.65);
+  color:#00e8c8;
+  background:transparent;
+  cursor:pointer;
+  transition:0.2s ease;
+  box-shadow:
+    0 0 6px rgba(0,232,200,0.25),
+    inset 0 0 10px rgba(0,232,200,0.08);
+}
+.page-btn:hover{
+  background:rgba(0,232,200,0.12);
+  border-color:#00e8c8;
+  box-shadow:
+    0 0 12px rgba(0,232,200,0.45),
+    inset 0 0 14px rgba(0,232,200,0.18);
+}
+.page-btn.active{
+  background:#00e8c8;
+  color:#0f1214;
+  border-color:#00e8c8;
+  box-shadow:
+    0 0 10px rgba(0,232,200,0.65),
+    inset 0 0 12px rgba(255,255,255,0.25);
+}
+.page-btn:disabled{
+  opacity:0.35;
+  cursor:not-allowed;
+  border-color:rgba(0,232,200,0.35);
+  color:rgba(0,232,200,0.35);
+  box-shadow:none;
+}
+/* 输入框科技感 */
+.input-delta{
+  background:#272b2e;
+  border:1px solid rgba(0,232,200,0.65);
+  color:#d1d6d9;
+  outline:none;
+  transition:0.2s ease;
+  box-shadow:
+    inset 0 0 10px rgba(0,0,0,0.35),
+    0 0 6px rgba(0,232,200,0.25);
+}
+.input-delta:focus{
+  border-color:#00e8c8;
+  box-shadow:
+    inset 0 0 10px rgba(0,0,0,0.35),
+    0 0 12px rgba(0,232,200,0.45),
+    0 0 22px rgba(0,232,200,0.25);
+}
+.table-row:hover{
+  background:rgba(0,232,200,0.06);
+}
+.tick-line{
+  background:linear-gradient(90deg,transparent,#00e8c840,transparent);
+  height:1px;
+}
+.blink-warning{
+  animation:blink 1s infinite alternate;
+}
+@keyframes blink{
+  from{opacity:0.6}
+  to{opacity:1}
+}
+</style>
+</head>
+<!-- 全局最小宽度1280px，窗口小于该宽度出现横向滚动，布局不会压缩变形 -->
+<body class="text-delta-text min-h-screen flex overflow-hidden min-w-[1280px]">
+<!-- 左侧战术指挥侧边栏 -->
+<aside class="w-64 h-screen tactical-panel flex flex-col flex-shrink-0">
+  <div class="h-16 px-4 border-b border-[#00e8c822] flex items-center gap-3 flex-shrink-0">
+    <div class="w-10 h-10 bg-delta-scope/20 flex items-center justify-center rounded">
+      <i class="fa fa-crosshairs text-delta-scope text-xl"></i>
+    </div>
+    <div>
+      <h2 class="text-scope font-bold text-base">DELTA-7</h2>
+      <span class="text-xs text-gray-500">战术指挥终端 v3.9.2</span>
+    </div>
+  </div>
+  <nav class="flex-1 py-4 overflow-y-auto">
+    <div class="px-4 text-xs text-gray-600 mb-2">【作战总控】</div>
+    <div class="menu-item active px-4 py-3 flex items-center gap-3 cursor-pointer">
+      <i class="fa fa-map-o w-5 text-center"></i>
+      <span>战场态势总览</span>
+    </div>
+    <div class="menu-item px-4 py-3 flex items-center gap-3 cursor-pointer">
+      <i class="fa fa-microchip w-5 text-center"></i>
+      <span>前线节点监控</span>
+    </div>
+    <div class="menu-item px-4 py-3 flex items-center gap-3 cursor-pointer">
+      <i class="fa fa-rss w-5 text-center"></i>
+      <span>情报数据流</span>
+    </div>
+
+    <div class="px-4 text-xs text-gray-600 mt-6 mb-2">【作战单位管理】</div>
+    <div class="menu-item px-4 py-3 flex items-center gap-3 cursor-pointer">
+      <i class="fa fa-users w-5 text-center"></i>
+      <span>特战队员档案</span>
+    </div>
+    <div class="menu-item px-4 py-3 flex items-center gap-3 cursor-pointer">
+      <i class="fa fa-shield w-5 text-center"></i>
+      <span>装备弹药库</span>
+    </div>
+    <div class="menu-item px-4 py-3 flex items-center gap-3 cursor-pointer">
+      <i class="fa fa-file-text-o w-5 text-center"></i>
+      <span>作战日志</span>
+    </div>
+
+    <div class="px-4 text-xs text-gray-600 mt-6 mb-2">【系统运维】</div>
+    <div class="menu-item px-4 py-3 flex items-center gap-3 cursor-pointer">
+      <i class="fa fa-cogs w-5 text-center"></i>
+      <span>终端参数配置</span>
+    </div>
+    <div class="menu-item px-4 py-3 flex items-center gap-3 cursor-pointer">
+      <i class="fa fa-lock w-5 text-center"></i>
+      <span>权限加密管控</span>
+    </div>
+  </nav>
+  <div class="p-4 border-t border-[#00e8c822] flex items-center gap-3 flex-shrink-0">
+    <div class="w-9 h-9 rounded bg-delta-camo flex items-center justify-center">
+      <i class="fa fa-user-circle-o text-delta-scope"></i>
+    </div>
+    <div class="flex-1">
+      <div class="text-sm">指挥官 ADM-01</div>
+      <div class="text-xs text-gray-500">command@delta.mil</div>
+    </div>
+    <i class="fa fa-sign-out text-delta-warn cursor-pointer"></i>
+  </div>
+</aside>
+
+<!-- 主作战面板区域 -->
+<main class="flex-1 flex flex-col h-screen overflow-hidden">
+  <header class="h-16 tactical-panel flex items-center justify-between px-6 flex-shrink-0">
+    <div class="flex items-center gap-5">
+      <span class="text-gray-400">当前作战面板：战场态势总览</span>
+      <div class="tick-line w-6"></div>
+      <div class="relative">
+        <input placeholder="检索作战编号/队员ID/装备编码" class="input-delta rounded px-3 py-1 w-72 text-sm">
+        <i class="fa fa-search absolute right-3 top-2 text-gray-500"></i>
+      </div>
+    </div>
+    <div class="flex items-center gap-6">
+      <div class="relative">
+        <i class="fa fa-bell text-lg"></i>
+        <span class="absolute -top-1 -right-1 w-4 h-4 bg-delta-warn rounded-full text-xs flex items-center justify-center blink-warning">7</span>
+      </div>
+      <div class="flex items-center gap-2 text-scope">
+        <i class="fa fa-clock-o"></i>
+        <span id="tacticalTime" class="text-sm"></span>
+      </div>
+      <div class="flex items-center gap-2 text-delta-ammo">
+        <i class="fa fa-wifi"></i>
+        <span class="text-xs">链路稳定</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="flex-1 overflow-y-auto p-6">
+    <!-- 核心作战数据卡片 -->
+    <div class="grid grid-cols-4 gap-5 mb-6">
+      <div class="tactical-panel p-5 rounded">
+        <div class="flex justify-between items-start">
+          <div>
+            <div class="text-gray-500 text-sm">前线在线队员</div>
+            <div class="text-[30px] font-bold text-scope mt-2">217</div>
+            <div class="text-delta-scope text-xs mt-2"><i class="fa fa-arrow-up"></i> +18 今日增援</div>
+          </div>
+          <div class="w-12 h-12 rounded bg-[#00e8c815] flex items-center justify-center text-scope text-xl">
+            <i class="fa fa-user-plus"></i>
+          </div>
+        </div>
+      </div>
+      <div class="tactical-panel p-5 rounded">
+        <div class="flex justify-between items-start">
+          <div>
+            <div class="text-gray-500 text-sm">作战节点在线</div>
+            <div class="text-[30px] font-bold text-scope mt-2">42 / 48</div>
+            <div class="text-delta-scope text-xs mt-2"><i class="fa fa-check"></i> 87.5% 链路存活</div>
+          </div>
+          <div class="w-12 h-12 rounded bg-[#00e8c815] flex items-center justify-center text-scope text-xl">
+            <i class="fa fa-server"></i>
+          </div>
+        </div>
+      </div>
+      <div class="tactical-panel p-5 rounded">
+        <div class="flex justify-between items-start">
+          <div>
+            <div class="text-gray-500 text-sm">情报数据包总量</div>
+            <div class="text-[30px] font-bold text-scope mt-2">7.2TB</div>
+            <div class="text-delta-scope text-xs mt-2"><i class="fa fa-arrow-up"></i> +12.4% 24h</div>
+          </div>
+          <div class="w-12 h-12 rounded bg-[#00e8c815] flex items-center justify-center text-scope text-xl">
+            <i class="fa fa-exchange"></i>
+          </div>
+        </div>
+      </div>
+      <div class="tactical-panel p-5 rounded">
+        <div class="flex justify-between items-start">
+          <div>
+            <div class="text-gray-500 text-sm">高危战术告警</div>
+            <div class="text-[30px] font-bold text-delta-warn mt-2 blink-warning">5</div>
+            <div class="text-delta-warn text-xs mt-2"><i class="fa fa-exclamation-triangle"></i> 待处置风险</div>
+          </div>
+          <div class="w-12 h-12 rounded bg-[#ff2a2a15] flex items-center justify-center text-delta-warn text-xl">
+            <i class="fa fa-warning"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 战术图表区域 -->
+    <div class="grid grid-cols-3 gap-5 mb-6">
+      <div class="col-span-2 tactical-panel p-5 rounded">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-lg font-bold text-scope">24小时情报流量曲线</h3>
+          <div class="flex gap-3">
+            <button class="btn-delta-outline px-3 py-1 rounded text-sm">导出作战报表</button>
+            <button class="btn-delta px-3 py-1 rounded text-sm">实时刷新</button>
+          </div>
+        </div>
+        <canvas id="intelligenceChart" height="230"></canvas>
+      </div>
+      <div class="tactical-panel p-5 rounded">
+        <h3 class="text-lg font-bold text-scope mb-4">节点资源负载占比</h3>
+        <canvas id="loadChart" height="230"></canvas>
+      </div>
+    </div>
+
+    <!-- 前线作战节点表格 + 分页 -->
+    <div class="tactical-panel p-5 rounded">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-lg font-bold text-scope">前线作战节点列表</h3>
+        <div class="flex gap-3">
+          <button class="btn-delta-outline px-3 py-1 rounded text-sm">同步阵地数据</button>
+          <button class="btn-delta px-3 py-1 rounded text-sm">部署新节点</button>
+        </div>
+      </div>
+      <table class="w-full text-sm mb-4">
+        <thead>
+          <tr class="border-b border-[#00e8c820] text-gray-500">
+            <th class="text-left py-3 px-2">阵地编号</th>
+            <th class="text-left py-3 px-2">战术IP</th>
+            <th class="text-left py-3 px-2">部署区域</th>
+            <th class="text-left py-3 px-2">CPU负载</th>
+            <th class="text-left py-3 px-2">内存占用</th>
+            <th class="text-left py-3 px-2">链路状态</th>
+            <th class="text-left py-3 px-2">作战操作</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+          <!-- JS动态渲染分页数据 -->
+        </tbody>
+      </table>
+      <!-- 分页组件 -->
+      <div class="flex items-center justify-between">
+        <div class="text-xs text-gray-400">
+          共 <span class="text-scope">200</span> 条阵地数据，每页 <span class="text-scope">4</span> 条
+        </div>
+        <div class="flex items-center gap-2" id="pageWrap">
+          <button class="page-btn" id="prevBtn"><i class="fa fa-angle-left"></i></button>
+          <div id="pageNumWrap" class="flex gap-2"></div>
+          <button class="page-btn" id="nextBtn"><i class="fa fa-angle-right"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+// 战术实时时间
+function updateTacticalClock(){
+  const now = new Date();
+  document.getElementById("tacticalTime").innerText = now.toLocaleString("zh-CN");
+}
+updateTacticalClock();
+setInterval(updateTacticalClock,1000);
+
+// 情报流量折线图
+const intelCtx = document.getElementById("intelligenceChart").getContext("2d");
+new Chart(intelCtx,{
+  type:"line",
+  data:{
+    labels:["0000","0400","0800","1200","1600","2000","2400"],
+    datasets:[{
+      label:"情报包数量(万)",
+      data:[142,110,268,439,376,312,174],
+      borderColor:"#00e8c8",
+      backgroundColor:"rgba(0,232,200,0.08)",
+      fill:true,
+      tension:0.35,
+      pointBackgroundColor:"#00e8c8"
+    }]
+  },
+  options:{
+    responsive:true,
+    plugins:{legend:{labels:{color:"#d1d6d9"}}},
+    scales:{
+      x:{grid:{color:"rgba(0,232,200,0.08)"},ticks:{color:"#aaa"}},
+      y:{grid:{color:"rgba(0,232,200,0.08)"},ticks:{color:"#aaa"}}
+    }
+  }
+})
+
+// 负载环形图
+const loadCtx = document.getElementById("loadChart").getContext("2d");
+new Chart(loadCtx,{
+  type:"doughnut",
+  data:{
+    labels:["CPU占用","内存占用","空闲资源"],
+    datasets:[{
+      data:[41,47,12],
+      backgroundColor:["#00e8c8","#ffb020","#ff2a2a"]
+    }]
+  },
+  options:{
+    plugins:{legend:{labels:{color:"#d1d6d9"}}},
+    cutout:"68%"
+  }
+})
+
+// ====================== 分页逻辑 200条数据 ======================
+const total = 200;
+const pageSize = 4;
+const totalPage = Math.ceil(total / pageSize);
+let currentPage = 1;
+const tableBody = document.getElementById('tableBody');
+const pageNumWrap = document.getElementById('pageNumWrap');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+
+// 生成单条阵地数据
+function createRow(id){
+  const zoneList = ['A1东部战区','A2东部战区','B3北部战区','B4北部战区','C2南部战区','C5南部战区','D7西部战区'];
+  const zone = zoneList[id % zoneList.length];
+  const ip = `172.16.${Math.floor(id/10)}.${String(id).padStart(2,'0')}`;
+  const cpu = Math.floor(Math.random()*100);
+  const mem = Math.floor(Math.random()*100);
+  let statusText, statusClass, opText, opClass;
+  if(cpu < 60){
+    statusText = "通信正常"; statusClass = "text-scope"; opText = "重启链路"; opClass = "text-delta-ammo";
+  }else if(cpu < 90){
+    statusText = "高负载预警"; statusClass = "text-delta-ammo"; opText = "重启链路"; opClass = "text-delta-ammo";
+  }else if(cpu < 99){
+    statusText = "资源过载"; statusClass = "text-delta-warn blink-warning"; opText = "紧急重置"; opClass = "text-delta-warn";
+  }else{
+    statusText = "离线休整"; statusClass = "text-gray-500"; opText = "启动阵地"; opClass = "text-scope";
+  }
+  return `
+    <tr class="table-row border-b border-[#00e8c810]">
+      <td class="py-3 px-2">SITE-${String(id).padStart(3,'0')}</td>
+      <td class="py-3 px-2 text-scope">${ip}</td>
+      <td class="py-3 px-2">${zone}</td>
+      <td class="py-3 px-2">${cpu}%</td>
+      <td class="py-3 px-2">${mem}%</td>
+      <td class="py-3 px-2 ${statusClass}"><i class="fa fa-circle"></i> ${statusText}</td>
+      <td class="py-3 px-2">
+        <span class="text-scope cursor-pointer mr-3">详情</span>
+        <span class="${opClass} cursor-pointer">${opText}</span>
+      </td>
+    </tr>
+  `
+}
+
+// 渲染当前页表格
+function renderTable(){
+  let html = '';
+  const start = (currentPage - 1) * pageSize + 1;
+  const end = Math.min(currentPage * pageSize, total);
+  for(let i = start; i <= end; i++){
+    html += createRow(i);
+  }
+  tableBody.innerHTML = html;
+}
+
+// 渲染分页页码按钮
+function renderPageNum(){
+  pageNumWrap.innerHTML = '';
+  let showPages = [];
+  if(totalPage <=5){
+    for(let i=1;i<=totalPage;i++) showPages.push(i);
+  }else{
+    if(currentPage <=3){
+      showPages = [1,2,3,4,5];
+    }else if(currentPage >= totalPage -2){
+      showPages = [totalPage-4,totalPage-3,totalPage-2,totalPage-1,totalPage];
+    }else{
+      showPages = [currentPage-2,currentPage-1,currentPage,currentPage+1,currentPage+2];
+    }
+  }
+  showPages.forEach(p=>{
+    const btn = document.createElement('button');
+    btn.className = 'page-btn ' + (p === currentPage ? 'active' : '');
+    btn.innerText = p;
+    btn.onclick = ()=>{
+      currentPage = p;
+      refreshPage();
+    }
+    pageNumWrap.appendChild(btn);
+  })
+  prevBtn.disabled = currentPage === 1;
+  nextBtn.disabled = currentPage === totalPage;
+}
+
+function refreshPage(){
+  renderTable();
+  renderPageNum();
+}
+prevBtn.onclick = ()=>{
+  if(currentPage >1){
+    currentPage--;
+    refreshPage();
+  }
+}
+nextBtn.onclick = ()=>{
+  if(currentPage < totalPage){
+    currentPage++;
+    refreshPage();
+  }
+}
+refreshPage();
+</script>
+</body>
+</html>
